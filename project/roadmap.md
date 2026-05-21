@@ -25,6 +25,7 @@ title: Bilingual welcome site live on GitHub Pages
 detail: fine
 outcomes: [O-1, O-2]
 target_sprint: 1
+mvp: true
 status: proposed
 ```
 
@@ -47,6 +48,7 @@ title: First three portfolio-derived blog posts (EN + DE pairs)
 detail: fine
 outcomes: [O-2, O-5]
 target_sprint: 1
+mvp: true
 status: proposed
 ```
 
@@ -68,6 +70,7 @@ title: Tag and topic index pages in both languages
 detail: fine
 outcomes: [O-3]
 target_sprint: 1
+mvp: false
 status: proposed
 ```
 
@@ -87,6 +90,7 @@ title: AI-disclosure UX
 detail: fine
 outcomes: [O-4]
 target_sprint: 1
+mvp: false
 status: proposed
 ```
 
