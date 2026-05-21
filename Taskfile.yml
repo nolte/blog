@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  install:
+    desc: Install npm dependencies
+    cmds:
+      - npm install
+
+  dev:
+    desc: Start the Astro dev server on http://localhost:4321
+    cmds:
+      - npm run dev
+
+  build:
+    desc: Build the production site into dist/
+    cmds:
+      - npm run build
+
+  preview:
+    desc: Serve the production build locally
+    deps: [build]
+    cmds:
+      - npm run preview
+
+  check:
+    desc: Type-check Astro + content collections
+    cmds:
+      - npm run check
+
+  lint:
+    desc: Run all static checks (alias for check)
+    cmds:
+      - task: check
+
+  clean:
+    desc: Remove build artefacts and Astro caches
+    cmds:
+      - rm -rf dist .astro
+
+  new-post:
+    desc: Scaffold a bilingual post pair (POST=my-slug task new-post)
+    vars:
+      POST: '{{.POST | default ""}}'
+      TODAY:
+        sh: date -u +%Y-%m-%d
+    preconditions:
+      - sh: '[ -n "{{.POST}}" ]'
+        msg: 'Set POST=<slug>, e.g. POST=my-slug task new-post'
+      - sh: '[ ! -f src/content/posts/en/{{.POST}}.md ]'
+        msg: "src/content/posts/en/{{.POST}}.md already exists"
+    cmds:
+      - mkdir -p src/content/posts/en src/content/posts/de
+      - |
+        cat > src/content/posts/en/{{.POST}}.md <<EOF
+        ---
+        title: "TODO: English title"
+        description: "TODO: 1–2 sentence description."
+        pubDate: {{.TODAY}}
+        lang: en
+        translationKey: {{.POST}}
+        tags: []
+        aiGenerated: true
+        draft: true
+        ---
+
+        TODO: write the English version first.
+        EOF
+      - |
+        cat > src/content/posts/de/{{.POST}}.md <<EOF
+        ---
+        title: "TODO: Deutscher Titel"
+        description: "TODO: 1–2 Sätze Beschreibung."
+        pubDate: {{.TODAY}}
+        lang: de
+        translationKey: {{.POST}}
+        tags: []
+        aiGenerated: true
+        draft: true
+        ---
+
+        TODO: deutsche Übersetzung, nachdem die englische Fassung steht.
+        EOF
+      - echo "Created src/content/posts/en/{{.POST}}.md and src/content/posts/de/{{.POST}}.md"

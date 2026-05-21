@@ -1,0 +1,32 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { useTranslations } from "~/i18n/ui";
+
+const lang = "en" as const;
+const t = useTranslations(lang);
+
+const projects = (
+  await getCollection("projects", ({ data }) => data.lang === lang && !data.archived)
+).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Projects" lang={lang}>
+  <h1 class="mb-8 text-3xl font-bold tracking-tight">{t("list.projects")}</h1>
+  {projects.length === 0 ? (
+    <p class="text-zinc-600 dark:text-zinc-400">No projects listed yet.</p>
+  ) : (
+    <ul class="space-y-6">
+      {projects.map((p) => (
+        <li>
+          <h2 class="text-xl font-medium">{p.data.name}</h2>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400">{p.data.description}</p>
+          <div class="mt-1 flex gap-3 text-xs text-zinc-500">
+            {p.data.repo && <a href={p.data.repo} class="underline hover:no-underline">Repository</a>}
+            {p.data.homepage && <a href={p.data.homepage} class="underline hover:no-underline">Homepage</a>}
+          </div>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>

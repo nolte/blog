@@ -1,0 +1,23 @@
+---
+import PostLayout from "~/layouts/PostLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts", ({ data }) => data.lang === "en" && !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/^en\//, "") },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const slug = post.id.replace(/^en\//, "");
+const translationHref = `${base}/de/blog/${slug}`;
+---
+
+<PostLayout post={post} translationHref={translationHref}>
+  <Content />
+</PostLayout>

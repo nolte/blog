@@ -1,0 +1,69 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import type { CollectionEntry } from "astro:content";
+import { useTranslations } from "~/i18n/ui";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+  translationHref?: string;
+}
+
+const { post, translationHref } = Astro.props;
+const lang = post.data.lang;
+const t = useTranslations(lang);
+const dateLocale = lang === "de" ? "de-DE" : "en-US";
+const pubFormatted = post.data.pubDate.toLocaleDateString(dateLocale, {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+const updatedFormatted = post.data.updatedDate?.toLocaleDateString(dateLocale, {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const blogHref = lang === "en" ? `${base}/blog` : `${base}/de/blog`;
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  lang={lang}
+  ogImage={post.data.heroImage}
+>
+  <article class="prose prose-zinc dark:prose-invert max-w-none">
+    <header class="mb-8 not-prose">
+      <h1 class="text-3xl font-bold tracking-tight">{post.data.title}</h1>
+      <p class="mt-2 text-zinc-600 dark:text-zinc-400">{post.data.description}</p>
+      <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-zinc-500">
+        <time datetime={post.data.pubDate.toISOString()}>
+          {t("post.published")}: {pubFormatted}
+        </time>
+        {updatedFormatted && (
+          <span>
+            {t("post.updated")}: {updatedFormatted}
+          </span>
+        )}
+        {post.data.aiGenerated && <span class="rounded bg-amber-100 px-1.5 py-0.5 text-amber-900 dark:bg-amber-900/40 dark:text-amber-200">AI</span>}
+        {translationHref && (
+          <a href={translationHref} class="underline hover:no-underline">
+            {t("post.translation")}
+          </a>
+        )}
+      </div>
+      {post.data.tags.length > 0 && (
+        <ul class="mt-3 flex flex-wrap gap-2 text-xs">
+          {post.data.tags.map((tag) => (
+            <li class="rounded bg-zinc-100 px-2 py-0.5 font-mono dark:bg-zinc-900">#{tag}</li>
+          ))}
+        </ul>
+      )}
+    </header>
+    <slot />
+    <hr class="my-10" />
+    <p class="text-sm">
+      <a href={blogHref}>{t("post.backToBlog")}</a>
+    </p>
+  </article>
+</BaseLayout>

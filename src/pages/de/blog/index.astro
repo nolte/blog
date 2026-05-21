@@ -1,0 +1,36 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { useTranslations } from "~/i18n/ui";
+
+const lang = "de" as const;
+const t = useTranslations(lang);
+
+const posts = (await getCollection("posts", ({ data }) => data.lang === lang && !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const postHref = (id: string) => `${base}/de/blog/${id.replace(/^de\//, "")}`;
+---
+
+<BaseLayout title="Blog" lang={lang}>
+  <h1 class="mb-8 text-3xl font-bold tracking-tight">{t("list.allPosts")}</h1>
+  {posts.length === 0 ? (
+    <p class="text-zinc-600 dark:text-zinc-400">{t("list.noPosts")}</p>
+  ) : (
+    <ul class="space-y-8">
+      {posts.map((p) => (
+        <li>
+          <a href={postHref(p.id)} class="group block">
+            <h2 class="text-xl font-medium group-hover:underline">{p.data.title}</h2>
+            <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{p.data.description}</p>
+            <time class="text-xs text-zinc-500" datetime={p.data.pubDate.toISOString()}>
+              {p.data.pubDate.toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" })}
+            </time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>
