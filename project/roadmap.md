@@ -102,3 +102,42 @@ Intended features:
 
 - [ ] Per-post AI-disclosure badge with link
 - [ ] About-page section explaining the AI-drafted workflow
+
+### R-5 — Hero image concept (mandatoriness, style, pipeline, rendering)
+
+```yaml
+id: R-5
+title: Hero image concept (mandatoriness, style, pipeline, rendering)
+detail: coarse
+outcomes: [O-2]
+target_sprint: null
+mvp: false
+status: proposed
+```
+
+Decide whether posts should carry a hero image (today optional and
+emitted only as `og:image` in the `<head>`), settle a corpus-wide
+visual style or its absence, choose a generation pipeline (AI, stock,
+hand-made, or mix), and have the layout actually render the image
+visually rather than only as social-share metadata. Pulled out of the
+`blog-author` spec's open-questions section because hero-image policy
+is a product and layout decision, not an author-contract question.
+
+### R-6 — Vale wiring for the author self-check (EN mechanics)
+
+```yaml
+id: R-6
+title: Vale wiring for the author self-check (EN mechanics)
+detail: coarse
+outcomes: [O-4]
+target_sprint: null
+mvp: false
+status: proposed
+```
+
+Set up Vale configuration in the repo and wire the `prose-vale-curator`
+agent (from `claude-shared`) into step 6 / 7 of the `blog-author`
+workflow to give the EN body a machine-checked pass before editor
+handover. Full machine wiring of all per-post acceptance criteria from
+the sibling specs stays tied to the editor release and remains an open
+question in the `blog-author` spec.
