@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import rehypeMermaid from "rehype-mermaid";
 
 // Update site + base when the deployment URL is fixed. For a project page on
 // GitHub Pages (https://<user>.github.io/blog/) set base: "/blog". For a
@@ -18,6 +19,14 @@ export default defineConfig({
       prefixDefaultLocale: false,
       redirectToDefaultLocale: false,
     },
+  },
+  // Mermaid blocks are rendered to inline SVG at build time by rehype-mermaid
+  // (backed by Playwright/Chromium). No runtime JS, no client-side mermaid lib.
+  // syntaxHighlight.excludeLangs prevents Shiki from highlighting the source
+  // before rehype-mermaid sees it.
+  markdown: {
+    syntaxHighlight: { type: "shiki", excludeLangs: ["mermaid", "math"] },
+    rehypePlugins: [[rehypeMermaid, { strategy: "inline-svg" }]],
   },
   integrations: [mdx(), sitemap({ i18n: { defaultLocale: "en", locales: { en: "en", de: "de" } } })],
   vite: {

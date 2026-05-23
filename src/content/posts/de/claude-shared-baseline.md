@@ -22,16 +22,26 @@ Das Problem zeigte sich beim dritten Mal, als ich etwas ändern musste. Ich hatt
 
 Visuell sieht der Wechsel von einem Dutzend driftenden Kopien zu einem Plugin so aus:
 
-```text
-Vorher                              Nachher
-
-  Repo A  ──  CLAUDE.md (v3)         Repo A  ──┐
-  Repo B  ──  CLAUDE.md (v1)         Repo B  ──┤
-  Repo C  ──  CLAUDE.md (v3)         Repo C  ──┼──▶  nolte-shared-Plugin
-  Repo D  ──  CLAUDE.md (v2)         Repo D  ──┤
-  Repo …  ──  CLAUDE.md (v?)         Repo …  ──┘
-
-  viele Kopien, driftend             eine Quelle, kein Drift
+```mermaid
+flowchart LR
+    subgraph Vorher["Vorher: viele Kopien, driftend"]
+        direction TB
+        rA["Repo A<br/>CLAUDE.md v3"]
+        rB["Repo B<br/>CLAUDE.md v1"]
+        rC["Repo C<br/>CLAUDE.md v3"]
+        rD["Repo D<br/>CLAUDE.md v2"]
+        rE["Repo …<br/>CLAUDE.md v?"]
+    end
+    subgraph Nachher["Nachher: eine Quelle, kein Drift"]
+        direction TB
+        rA2[Repo A] --> Plugin
+        rB2[Repo B] --> Plugin
+        rC2[Repo C] --> Plugin
+        rD2[Repo D] --> Plugin
+        rE2[Repo …] --> Plugin
+        Plugin[("nolte-shared-Plugin")]
+    end
+    Vorher ~~~ Nachher
 ```
 
 Dieselbe Menge Repos in beiden Fällen. Der Unterschied: ob die Workflows, die sie teilen, an einer Stelle oder an zwölf wohnen.

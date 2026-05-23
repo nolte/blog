@@ -22,16 +22,26 @@ The problem showed up the third time I had to change something. I'd added a stri
 
 Visually, the move from a dozen drifting copies to one plugin looks like this:
 
-```text
-Before                              After
-
-  repo A  ──  CLAUDE.md (v3)         repo A  ──┐
-  repo B  ──  CLAUDE.md (v1)         repo B  ──┤
-  repo C  ──  CLAUDE.md (v3)         repo C  ──┼──▶  nolte-shared plugin
-  repo D  ──  CLAUDE.md (v2)         repo D  ──┤
-  repo …  ──  CLAUDE.md (v?)         repo …  ──┘
-
-  many copies, drifting              one source, no drift
+```mermaid
+flowchart LR
+    subgraph Before["Before: many copies, drifting"]
+        direction TB
+        rA["repo A<br/>CLAUDE.md v3"]
+        rB["repo B<br/>CLAUDE.md v1"]
+        rC["repo C<br/>CLAUDE.md v3"]
+        rD["repo D<br/>CLAUDE.md v2"]
+        rE["repo …<br/>CLAUDE.md v?"]
+    end
+    subgraph After["After: one source, no drift"]
+        direction TB
+        rA2[repo A] --> Plugin
+        rB2[repo B] --> Plugin
+        rC2[repo C] --> Plugin
+        rD2[repo D] --> Plugin
+        rE2[repo …] --> Plugin
+        Plugin[("nolte-shared plugin")]
+    end
+    Before ~~~ After
 ```
 
 Same set of repos either way. The difference is whether the workflows they share live in one place or twelve.

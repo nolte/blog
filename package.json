@@ -21,5 +21,9 @@
     "astro": "^5.7.10",
     "tailwindcss": "^4.1.5",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0",
+    "rehype-mermaid": "^3.0.0"
   }
 }
