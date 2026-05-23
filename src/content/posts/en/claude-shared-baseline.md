@@ -2,6 +2,7 @@
 title: "Why I run one Claude Code plugin across every repo"
 description: "How I stopped duplicating CLAUDE.md snippets across projects and extracted everything reusable into a single shared plugin called nolte-shared."
 pubDate: 2026-05-23
+updatedDate: 2026-05-23
 lang: en
 translationKey: claude-shared-baseline
 tags: ["claude-code", "plugins", "developer-tools", "portfolio"]
@@ -18,6 +19,22 @@ I run Claude Code across about a dozen repos — this blog, home-automation tool
 For a while, the duplication felt fine. I'd write a `## Pull request conventions` block in one repo's `CLAUDE.md`, copy it into the next, tweak a couple of lines, move on. The repos worked. Each Claude session had what it needed.
 
 The problem showed up the third time I had to change something. I'd added a stricter PR-title rule in one repo (Conventional Commits with a required scope), and Claude in that repo respected it. In the other repos, Claude was still suggesting bare `feat: ...` titles, because the duplicated blocks were a quarter-stale and nobody updated them. The same drift was hiding in the review prompts and the Vale vocabulary references — a baseline I could no longer trust.
+
+Visually, the move from a dozen drifting copies to one plugin looks like this:
+
+```text
+Before                              After
+
+  repo A  ──  CLAUDE.md (v3)         repo A  ──┐
+  repo B  ──  CLAUDE.md (v1)         repo B  ──┤
+  repo C  ──  CLAUDE.md (v3)         repo C  ──┼──▶  nolte-shared plugin
+  repo D  ──  CLAUDE.md (v2)         repo D  ──┤
+  repo …  ──  CLAUDE.md (v?)         repo …  ──┘
+
+  many copies, drifting              one source, no drift
+```
+
+Same set of repos either way. The difference is whether the workflows they share live in one place or twelve.
 
 ## What `nolte-shared` actually contains
 

@@ -2,6 +2,10 @@
 
 Delivery contract for the bilingual post pair `src/content/posts/{en,de}/claude-shared-baseline.md`, produced by `nolte-shared:blog-author` per the consumer-side contract in `spec/project/blog-author/` §Liefervertrag. Three artefacts: self-check manifest, source-to-claim mapping, handoff manifest.
 
+## Updates
+
+- **2026-05-23** — added an ASCII before/after diagram at the end of the "drift" section visualising the convergence-not-drift thesis (12 driftenden Kopien → 1 Plugin). `updatedDate` set in both frontmatter blocks per `spec/project/blog-author/` §Update- vs. Neuanlage-Felder. `slug` and `translationKey` unchanged per the same spec MUST. Diagram is a `text`-fenced code block with one setup sentence before and one interpretation sentence after per `spec/project/post-writing-style/` §Code, Befehle und andere technische Inhalte. Regression-scan against per-post acceptance criteria: 0 oversized paragraphs, 0 forbidden-word hits, `task build` green (13 pages, 1.69s).
+
 ## Self-check manifest
 
 Per-post acceptance criteria from the two sibling specs, evaluated for each language separately plus the pair as a whole. Format: `<spec> a-<n>: <status> [— <reason>]`.

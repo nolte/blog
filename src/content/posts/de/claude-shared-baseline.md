@@ -2,6 +2,7 @@
 title: "Warum ich ein einziges Claude-Code-Plugin in allen Repos nutze"
 description: "Wie ich aufgehört habe, CLAUDE.md-Snippets über Projekte zu kopieren, und stattdessen alles Wiederverwendbare in ein geteiltes Plugin namens nolte-shared extrahiert habe."
 pubDate: 2026-05-23
+updatedDate: 2026-05-23
 lang: de
 translationKey: claude-shared-baseline
 tags: ["claude-code", "plugins", "developer-tools", "portfolio"]
@@ -18,6 +19,22 @@ Ich nutze Claude Code in rund einem Dutzend Repos — diesem Blog, Home-Automati
 Eine Zeit lang fühlte sich die Duplikation in Ordnung an. Ich schrieb einen `## Pull request conventions`-Block in das `CLAUDE.md` eines Repos, kopierte ihn ins nächste, passte ein paar Zeilen an, machte weiter. Die Repos funktionierten. Jede Claude-Session hatte, was sie brauchte.
 
 Das Problem zeigte sich beim dritten Mal, als ich etwas ändern musste. Ich hatte eine strengere PR-Titel-Regel in einem Repo eingeführt (Conventional Commits mit Pflicht-Scope), und Claude in jenem Repo hielt sich daran. In den anderen Repos schlug Claude weiterhin schlichte `feat: ...`-Titel vor, weil die duplizierten Blöcke ein Quartal alt waren und niemand sie aktualisiert hatte. Derselbe Drift versteckte sich in den Review-Prompts und in den Vale-Vokabular-Verweisen — eine Baseline, der ich nicht mehr traute.
+
+Visuell sieht der Wechsel von einem Dutzend driftenden Kopien zu einem Plugin so aus:
+
+```text
+Vorher                              Nachher
+
+  Repo A  ──  CLAUDE.md (v3)         Repo A  ──┐
+  Repo B  ──  CLAUDE.md (v1)         Repo B  ──┤
+  Repo C  ──  CLAUDE.md (v3)         Repo C  ──┼──▶  nolte-shared-Plugin
+  Repo D  ──  CLAUDE.md (v2)         Repo D  ──┤
+  Repo …  ──  CLAUDE.md (v?)         Repo …  ──┘
+
+  viele Kopien, driftend             eine Quelle, kein Drift
+```
+
+Dieselbe Menge Repos in beiden Fällen. Der Unterschied: ob die Workflows, die sie teilen, an einer Stelle oder an zwölf wohnen.
 
 ## Was `nolte-shared` tatsächlich enthält
 
