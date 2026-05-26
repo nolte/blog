@@ -13,7 +13,12 @@
   body {
     @apply bg-zinc-50 text-zinc-900 antialiased;
   }
-  :root.dark body {
-    @apply bg-zinc-950 text-zinc-100;
+  /* Match Tailwind v4's default `dark:` variant strategy (prefers-color-scheme)
+     so the body background stays in sync with `dark:prose-invert`, header
+     `dark:bg-zinc-950/80`, and friends. The site has no JS-driven toggle. */
+  @media (prefers-color-scheme: dark) {
+    body {
+      @apply bg-zinc-950 text-zinc-100;
+    }
   }
 }
