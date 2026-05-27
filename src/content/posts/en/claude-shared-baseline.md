@@ -23,25 +23,34 @@ The problem showed up the third time I had to change something. I'd added a stri
 Visually, the move from a dozen drifting copies to one plugin looks like this:
 
 ```mermaid
-flowchart LR
-    subgraph Before["Before: many copies, drifting"]
-        direction TB
-        rA["repo A<br/>CLAUDE.md v3"]
-        rB["repo B<br/>CLAUDE.md v1"]
-        rC["repo C<br/>CLAUDE.md v3"]
-        rD["repo D<br/>CLAUDE.md v2"]
-        rE["repo …<br/>CLAUDE.md v?"]
+flowchart TB
+    subgraph Before["Before: drift across copies"]
+        direction LR
+        vA["repo A<br/>CLAUDE.md v3"]
+        vB["repo B<br/>CLAUDE.md v1"]
+        vC["repo C<br/>CLAUDE.md v3"]
+        vD["repo D<br/>CLAUDE.md v2"]
+        vE["repo …<br/>CLAUDE.md v?"]
     end
-    subgraph After["After: one source, no drift"]
-        direction TB
-        rA2[repo A] --> Plugin
-        rB2[repo B] --> Plugin
-        rC2[repo C] --> Plugin
-        rD2[repo D] --> Plugin
-        rE2[repo …] --> Plugin
-        Plugin[("nolte-shared plugin")]
+    Plugin(["nolte-shared plugin"])
+    subgraph After["After: one shared source"]
+        direction LR
+        nA[repo A]
+        nB[repo B]
+        nC[repo C]
+        nD[repo D]
+        nE[repo …]
     end
-    Before ~~~ After
+    vA -.-> Plugin
+    vB -.-> Plugin
+    vC -.-> Plugin
+    vD -.-> Plugin
+    vE -.-> Plugin
+    Plugin --> nA
+    Plugin --> nB
+    Plugin --> nC
+    Plugin --> nD
+    Plugin --> nE
 ```
 
 Same set of repos either way. The difference is whether the workflows they share live in one place or twelve.
@@ -55,6 +64,20 @@ The plugin sits in [`nolte/claude-shared`](https://github.com/nolte/claude-share
 - **Specifications** under `spec/` — bilingual Markdown (canonical English, German translation kept in sync) describing the contract each skill or agent implements.
 
 What makes it more than a `CLAUDE.md` collection is the third bucket. Every skill in the plugin has a spec it implements. If the skill drifts from its spec, the `skill-review` skill catches it and writes an actionable review plan; if the spec itself contradicts another spec, `spec-readiness-reviewer` flags it. The Claude Code [plugin documentation](https://docs.claude.com/en/docs/claude-code/plugins) handles distribution; the specs handle correctness.
+
+The three buckets and how they relate:
+
+```mermaid
+flowchart LR
+    subgraph Plugin["nolte-shared plugin"]
+        direction TB
+        Skills["Skills<br/>skill-management · pull-request-create<br/>lektorat-apply · quality-gate · …"]
+        Agents["Agents<br/>claude-plugin-developer<br/>lektorat-scanner<br/>prose-vale-curator · …"]
+        Specs[("Specs<br/>spec/claude/skill-management<br/>spec/project/pull-request-workflow · …")]
+    end
+    Skills -.->|implement| Specs
+    Skills -->|dispatch| Agents
+```
 
 ## Why a plugin and not the alternatives
 
@@ -71,6 +94,15 @@ A plugin gives me three things at once: a marketplace install path for normal co
 ## Dogfooding: the plugin develops itself
 
 The `claude-shared` repo applies its own specs to itself. Its roadmap (`project/roadmap.md`) follows `spec/project/roadmap/`; the `sprint-execute` skill manages its sprints (`project/sprints/`); `pull-request-create` opens its pull requests and `pull-request-merge` lands them, both following `spec/project/pull-request-workflow/`. The spec governs the repo; the skill enforces the spec; both ship in the same plugin.
+
+The closed loop is the whole point:
+
+```mermaid
+flowchart LR
+    Spec[("Spec<br/>spec/project/roadmap")] -->|enforced by| Skill["Skill<br/>sprint-execute<br/>pull-request-merge"]
+    Skill -->|writes / updates| Repo[("claude-shared repo<br/>project/roadmap.md<br/>project/sprints/")]
+    Repo -.->|reveals gaps in| Spec
+```
 
 This is the cheapest reality check I know. If a spec is unworkable, the first place it falls apart is here, in the repo that owns it; if a skill produces awkward output, I notice it on the next PR I open, not on the next consumer who installs it. The fix lands in the same PR — with the spec, with the skill, with the example. Roadmap item `R-1` ("Planning-suite dogfood adoption complete") is the explicit commitment to keep doing this before anything migrates to consumer repos.
 

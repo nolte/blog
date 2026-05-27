@@ -23,25 +23,34 @@ Das Problem zeigte sich beim dritten Mal, als ich etwas ändern musste. Ich hatt
 Visuell sieht der Wechsel von einem Dutzend driftenden Kopien zu einem Plugin so aus:
 
 ```mermaid
-flowchart LR
-    subgraph Vorher["Vorher: viele Kopien, driftend"]
-        direction TB
-        rA["Repo A<br/>CLAUDE.md v3"]
-        rB["Repo B<br/>CLAUDE.md v1"]
-        rC["Repo C<br/>CLAUDE.md v3"]
-        rD["Repo D<br/>CLAUDE.md v2"]
-        rE["Repo …<br/>CLAUDE.md v?"]
+flowchart TB
+    subgraph Vorher["Vorher: Drift über Kopien"]
+        direction LR
+        vA["Repo A<br/>CLAUDE.md v3"]
+        vB["Repo B<br/>CLAUDE.md v1"]
+        vC["Repo C<br/>CLAUDE.md v3"]
+        vD["Repo D<br/>CLAUDE.md v2"]
+        vE["Repo …<br/>CLAUDE.md v?"]
     end
-    subgraph Nachher["Nachher: eine Quelle, kein Drift"]
-        direction TB
-        rA2[Repo A] --> Plugin
-        rB2[Repo B] --> Plugin
-        rC2[Repo C] --> Plugin
-        rD2[Repo D] --> Plugin
-        rE2[Repo …] --> Plugin
-        Plugin[("nolte-shared-Plugin")]
+    Plugin(["nolte-shared-Plugin"])
+    subgraph Nachher["Nachher: eine geteilte Quelle"]
+        direction LR
+        nA[Repo A]
+        nB[Repo B]
+        nC[Repo C]
+        nD[Repo D]
+        nE[Repo …]
     end
-    Vorher ~~~ Nachher
+    vA -.-> Plugin
+    vB -.-> Plugin
+    vC -.-> Plugin
+    vD -.-> Plugin
+    vE -.-> Plugin
+    Plugin --> nA
+    Plugin --> nB
+    Plugin --> nC
+    Plugin --> nD
+    Plugin --> nE
 ```
 
 Dieselbe Menge Repos in beiden Fällen. Der Unterschied: ob die Workflows, die sie teilen, an einer Stelle oder an zwölf wohnen.
@@ -55,6 +64,20 @@ Das Plugin liegt unter [`nolte/claude-shared`](https://github.com/nolte/claude-s
 - **Spezifikationen** unter `spec/` — zweisprachiges Markdown (kanonisch Englisch, deutsche Übersetzung im Lockstep) beschreibt den Vertrag, den jede Skill oder jeder Agent implementiert.
 
 Was das mehr macht als eine `CLAUDE.md`-Sammlung, ist der dritte Topf. Jede Skill im Plugin hat eine Spec, die sie implementiert. Driftet die Skill von ihrer Spec, fängt das die `skill-review`-Skill ab und schreibt einen ausführbaren Review-Plan; widerspricht die Spec einer anderen, flaggt das der `spec-readiness-reviewer`. Die [Plugin-Dokumentation](https://docs.claude.com/en/docs/claude-code/plugins) von Claude Code übernimmt die Distribution; die Specs übernehmen die Korrektheit.
+
+Die drei Töpfe und wie sie zusammenhängen:
+
+```mermaid
+flowchart LR
+    subgraph Plugin["nolte-shared-Plugin"]
+        direction TB
+        Skills["Skills<br/>skill-management · pull-request-create<br/>lektorat-apply · quality-gate · …"]
+        Agents["Agents<br/>claude-plugin-developer<br/>lektorat-scanner<br/>prose-vale-curator · …"]
+        Specs[("Specs<br/>spec/claude/skill-management<br/>spec/project/pull-request-workflow · …")]
+    end
+    Skills -.->|implementieren| Specs
+    Skills -->|dispatchen| Agents
+```
 
 ## Warum ein Plugin und nicht die Alternativen
 
@@ -71,6 +94,15 @@ Ein Plugin gibt mir drei Dinge auf einmal: einen Marketplace-Installations-Pfad 
 ## Dogfooding: das Plugin entwickelt sich selbst
 
 Das `claude-shared`-Repo wendet seine eigenen Specs auf sich selbst an. Seine Roadmap (`project/roadmap.md`) folgt `spec/project/roadmap/`; die `sprint-execute`-Skill verwaltet seine Sprints (`project/sprints/`); `pull-request-create` öffnet seine Pull Requests und `pull-request-merge` landet sie, beide nach `spec/project/pull-request-workflow/`. Die Spec regelt das Repo; die Skill setzt die Spec durch; beide werden im selben Plugin ausgeliefert.
+
+Der geschlossene Kreislauf ist der ganze Punkt:
+
+```mermaid
+flowchart LR
+    Spec[("Spec<br/>spec/project/roadmap")] -->|durchgesetzt von| Skill["Skill<br/>sprint-execute<br/>pull-request-merge"]
+    Skill -->|schreibt / aktualisiert| Repo[("claude-shared-Repo<br/>project/roadmap.md<br/>project/sprints/")]
+    Repo -.->|deckt Lücken auf in| Spec
+```
 
 Das ist der billigste Reality-Check, den ich kenne. Ist eine Spec nicht praktikabel, fällt sie zuerst hier auseinander, im Repo, das sie besitzt; produziert eine Skill ungelenke Ausgaben, merke ich es beim nächsten PR, den ich öffne, nicht beim nächsten Konsumenten, der sie installiert. Der Fix landet im selben PR — mit der Spec, mit der Skill, mit dem Beispiel. Roadmap-Item `R-1` („Planning-suite dogfood adoption complete“) ist die explizite Verpflichtung, das so beizubehalten, bevor irgendetwas in Konsumer-Repos wandert.
 
