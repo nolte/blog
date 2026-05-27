@@ -56,8 +56,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     */}
     {import.meta.env.DEV && (
       <script>
+        // `startOnLoad: true` would register a DOMContentLoaded listener, but
+        // this dynamic import resolves after DOMContentLoaded has already
+        // fired — the listener never runs. Disable startOnLoad and trigger
+        // mermaid.run() ourselves once the module is in.
         import("mermaid").then(({ default: mermaid }) => {
-          mermaid.initialize({ startOnLoad: true });
+          mermaid.initialize({ startOnLoad: false });
+          return mermaid.run({ querySelector: "pre.mermaid" });
         });
       </script>
     )}
