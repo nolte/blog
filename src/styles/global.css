@@ -13,6 +13,27 @@
   body {
     @apply bg-zinc-50 text-zinc-900 antialiased;
   }
+  /* rehype-mermaid (in dev) emits `<pre class="mermaid">`. Tailwind Typography
+     styles every `<pre>` inside `.prose` with a dark background + padding +
+     rounded corners — appropriate for code blocks, but it becomes a dark
+     frame around the client-rendered SVG. Strip the prose treatment so the
+     diagram sits flush with the surrounding body. */
+  pre.mermaid {
+    background-color: transparent !important;
+    color: inherit;
+    padding: 0;
+    margin: 1.5em 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+  /* The inline SVG mermaid renders inside that <pre> should also not pick up
+     stray prose styles. */
+  pre.mermaid svg {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
   /* Match Tailwind v4's default `dark:` variant strategy (prefers-color-scheme)
      so the body background stays in sync with `dark:prose-invert`, header
      `dark:bg-zinc-950/80`, and friends. The site has no JS-driven toggle. */
