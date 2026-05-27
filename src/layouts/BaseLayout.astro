@@ -45,5 +45,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <Footer lang={lang} />
+    {/*
+      Dev-only client-side Mermaid renderer. In `astro dev` the rehype-mermaid
+      plugin runs with strategy `pre-mermaid` (see astro.config.mjs) and leaves
+      the source as `<pre class="mermaid">`. This loader renders those blocks
+      in the browser so the diagram is visible during local authoring.
+      In `astro build` `import.meta.env.DEV` is `false`, Vite tree-shakes this
+      branch out, and the production HTML carries inline SVGs only — no
+      runtime JS, no mermaid bundle.
+    */}
+    {import.meta.env.DEV && (
+      <script>
+        import("mermaid").then(({ default: mermaid }) => {
+          mermaid.initialize({ startOnLoad: true });
+        });
+      </script>
+    )}
   </body>
 </html>
