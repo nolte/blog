@@ -35,7 +35,18 @@ export default defineConfig({
   },
   markdown: {
     syntaxHighlight: { type: "shiki", excludeLangs: ["mermaid", "math"] },
-    rehypePlugins: [[rehypeMermaid, { strategy: mermaidStrategy }]],
+    rehypePlugins: [
+      [
+        rehypeMermaid,
+        {
+          strategy: mermaidStrategy,
+          // Pin the theme so build-time and dev-time renders agree, regardless
+          // of the headless Chromium's prefers-color-scheme. The dark-mode look
+          // is handled by a CSS filter in src/styles/global.css.
+          mermaidConfig: { theme: "default" },
+        },
+      ],
+    ],
   },
   integrations: [mdx(), sitemap({ i18n: { defaultLocale: "en", locales: { en: "en", de: "de" } } })],
   vite: {

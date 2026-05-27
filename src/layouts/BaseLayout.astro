@@ -61,7 +61,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         // fired — the listener never runs. Disable startOnLoad and trigger
         // mermaid.run() ourselves once the module is in.
         import("mermaid").then(({ default: mermaid }) => {
-          mermaid.initialize({ startOnLoad: false });
+          // Pin theme to match the prod-build rehype-mermaid render (see
+          // astro.config.mjs). Mermaid 11 otherwise auto-switches to its
+          // built-in dark theme on `prefers-color-scheme: dark`, which doesn't
+          // match the production SVG; we handle dark mode via CSS instead.
+          mermaid.initialize({ startOnLoad: false, theme: "default" });
           return mermaid.run({ querySelector: "pre.mermaid" });
         });
       </script>

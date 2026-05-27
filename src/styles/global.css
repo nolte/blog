@@ -20,5 +20,15 @@
     body {
       @apply bg-zinc-950 text-zinc-100;
     }
+    /* Mermaid is pinned to the `default` (light) theme in both rehype-mermaid
+       (build) and client-side dev. In dark mode we recolour the rendered SVG
+       with a filter: invert turns the white background dark and the dark text
+       light; hue-rotate keeps coloured accents looking themselves. Targets
+       both the prod inline SVG (svg.flowchart) and the dev-rendered output
+       under `<pre class="mermaid">`. */
+    svg.flowchart,
+    pre.mermaid svg {
+      filter: invert(0.93) hue-rotate(180deg);
+    }
   }
 }
