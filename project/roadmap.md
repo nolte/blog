@@ -120,8 +120,10 @@ emitted only as `og:image` in the `<head>`), settle a corpus-wide
 visual style or its absence, choose a generation pipeline (AI, stock,
 hand-made, or mix), and have the layout actually render the image
 visually rather than only as social-share metadata. Pulled out of the
-`blog-author` spec's open-questions section because hero-image policy
-is a product and layout decision, not an author-contract question.
+`blog-author` spec's open-questions section (that spec now lives in
+[`claude-shared`](https://github.com/nolte/claude-shared/blob/develop/spec/project/blog-author/de.md);
+see `spec/project/_relocated.md`) because hero-image policy is a product
+and layout decision, not an author-contract question.
 
 ### R-6 — Vale wiring for the author self-check (EN mechanics)
 
@@ -140,4 +142,5 @@ agent (from `claude-shared`) into step 6 / 7 of the `blog-author`
 workflow to give the EN body a machine-checked pass before editor
 handover. Full machine wiring of all per-post acceptance criteria from
 the sibling specs stays tied to the editor release and remains an open
-question in the `blog-author` spec.
+question in the `blog-author` spec (now in `claude-shared`; see
+`spec/project/_relocated.md`).
