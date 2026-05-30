@@ -1,0 +1,44 @@
+_extends: nolte/gh-plumbing:.github/commons-settings.yml@v1.1.19
+
+repository:
+  name: blog
+  description: Bilingual (EN/DE) knowledge base and project log — AI-drafted, human-curated. Astro 5, deployed to GitHub Pages.
+  homepage: https://nolte.github.io/blog
+  default_branch: develop
+  topics:
+    - astro
+    - blog
+    - knowledge-base
+    - bilingual
+    - github-pages
+    - nolte
+  allow_squash_merge: true
+  allow_merge_commit: false
+  allow_rebase_merge: false
+  # Local override pending an upstream addition in
+  # gh-plumbing:.github/commons-settings.yml. Without this, the platform
+  # leaves merged feature branches behind, forcing a manual cleanup REST
+  # call on every pull-request-merge run.
+  delete_branch_on_merge: true
+
+branches:
+  - name: develop
+    protection:
+      required_pull_request_reviews:
+        required_approving_review_count: 0
+        dismiss_stale_reviews: false
+        require_code_owner_reviews: false
+      required_status_checks:
+        strict: true
+        contexts:
+          - lint
+          - build
+      enforce_admins: true
+      restrictions: null
+  - name: main
+    protection:
+      required_pull_request_reviews: null
+      required_status_checks: null
+      enforce_admins: true
+      required_linear_history: true
+      restrictions: null

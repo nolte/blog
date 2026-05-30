@@ -1,5 +1,8 @@
 # blog
 
+[![CI](https://github.com/nolte/blog/actions/workflows/ci.yml/badge.svg)](https://github.com/nolte/blog/actions/workflows/ci.yml)
+[![Deploy to GitHub Pages](https://github.com/nolte/blog/actions/workflows/deploy.yml/badge.svg)](https://github.com/nolte/blog/actions/workflows/deploy.yml)
+
 Bilingual (EN primary, DE secondary) knowledge base and project log,
 AI-drafted and human-curated.
 
