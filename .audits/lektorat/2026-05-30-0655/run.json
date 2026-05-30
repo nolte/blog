@@ -1,0 +1,16 @@
+{
+  "operation": "audit",
+  "ran_at": "2026-05-30T06:55:00Z",
+  "severity_floor": "suggestion",
+  "target_set": [
+    "src/content/posts/en/my-github-portfolio-by-audience.md",
+    "src/content/posts/de/my-github-portfolio-by-audience.md"
+  ],
+  "audience_artefact": "AUDIENCES.md",
+  "resolved_audiences": ["A", "B"],
+  "options": {
+    "dispatched_by": "nolte-shared:blog-author (Step 7 handover)",
+    "read_only": true
+  },
+  "id_hash_inputs": "file + dimension + line_start"
+}
