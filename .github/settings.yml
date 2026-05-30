@@ -1,5 +1,6 @@
 # Repository configuration applied by the Probot "settings" GitHub App.
 # Source of truth — edit settings here, never through the GitHub UI.
+# The app reconciles this file on every push to the default branch.
 _extends: nolte/gh-plumbing:.github/commons-settings.yml@v1.1.19
 
 repository:
