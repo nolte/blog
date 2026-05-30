@@ -39,6 +39,17 @@ tasks:
     cmds:
       - task: check
 
+  test:
+    desc: Validate content schema and build — the static blog's test surface
+    cmds:
+      - task: check
+      - task: build
+
+  docs:
+    desc: Build the site; this blog is its own documentation surface (no separate MkDocs)
+    cmds:
+      - task: build
+
   clean:
     desc: Remove build artefacts and Astro caches
     cmds:
