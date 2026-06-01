@@ -1,0 +1,140 @@
+# Portfolio manifest for nolte/blog.
+# Schema: spec/portfolio/portfolio-management/ §Capability inventory per repository
+# Audience references resolve against AUDIENCES.md at the repo root.
+
+capabilities:
+  - name: bilingual-blog-knowledge-base
+    description: >-
+      A bilingual (English-canonical, German-translated) Astro blog and
+      personal knowledge base, deployed to GitHub Pages, that publishes durable
+      posts as real EN+DE pairs without translation drift for technical
+      readers, portfolio reviewers, and the author's own future-self.
+    audience:
+      - A — Technical readers
+      - B — Portfolio reviewers
+      - C — Author as knowledge-base user
+    status: experimental
+    rationale: >-
+      This repository is the sole owner of the public bilingual blog and
+      knowledge-base surface in the nolte portfolio; the portfolio projects it
+      writes about live in separate repos and are only linked, not embedded
+      here. Promote to active once a closed sprint delivers the
+      acceptance-verified live bilingual site (F-1:acceptance-2).
+    peers:
+      - claude-shared:shared-claude-code-skills
+      - claude-shared:portfolio-spec-corpus
+    since: 2026-05-21
+
+  - name: transparent-ai-authoring
+    description: >-
+      Per-post AI-disclosure (the aiGenerated frontmatter flag, with a planned
+      visible badge and About-page explanation) that keeps AI-drafted content
+      transparently distinct from hand-curated content.
+    audience:
+      - A — Technical readers
+      - B — Portfolio reviewers
+      - L — People and projects named in posts
+    status: experimental
+    rationale: >-
+      AI-transparency is a stated project value (outcome O-4) the blog owns
+      end-to-end; the per-post aiGenerated flag exists today and the visible
+      badge plus About-page UX is queued on roadmap item R-4.
+    peers:
+      - claude-shared:shared-claude-code-skills
+    since: 2026-05-21
+
+# Schema: spec/portfolio/tech-stack/ §Per-repository tech-stack block.
+# Inherits the global stack from claude-shared:portfolio/tech-stack.yml;
+# only the per-repo deltas below are declared here.
+tech_stack:
+  additions:
+    - name: node
+      kind: runtime
+      group: build-tooling
+      lifecycle: build
+      role: JavaScript runtime that executes the Astro build and the local dev server.
+      status: active
+      source_of_truth: package.json
+
+    - name: npm
+      kind: package-manager
+      group: build-tooling
+      lifecycle: development
+      role: >-
+        Package manager resolving and locking the site's JS dependencies via
+        package-lock.json.
+      status: active
+      source_of_truth: package-lock.json
+
+    - name: astro
+      kind: framework
+      group: build-tooling
+      lifecycle: build
+      version: ^5.7.10
+      role: >-
+        Static-site framework that builds the bilingual blog into static HTML
+        for GitHub Pages.
+      status: active
+      source_of_truth: package.json
+      rationale: >-
+        acknowledged-missing-signal: Astro is the site's primary framework,
+        declared in package.json, but the discovery signal-source map has no
+        row for JS frameworks so it cannot be auto-derived.
+
+    - name: typescript
+      kind: language
+      group: build-tooling
+      lifecycle: build
+      version: ^5.8.3
+      role: >-
+        Typed authoring language for the site's components, content schema, and
+        Astro config.
+      status: active
+      source_of_truth: package.json
+      rationale: >-
+        acknowledged-missing-signal: TypeScript is the site's authoring
+        language, declared in package.json and tsconfig.json, but the discovery
+        signal-source map has no row for JS-ecosystem languages.
+
+    - name: tailwindcss
+      kind: framework
+      group: build-tooling
+      lifecycle: build
+      version: ^4.1.5
+      role: >-
+        Utility-first CSS framework styling the site via the @tailwindcss/vite
+        plugin.
+      status: active
+      source_of_truth: package.json
+      rationale: >-
+        acknowledged-missing-signal: Tailwind is the site's styling framework,
+        declared in package.json, but the discovery signal-source map has no
+        row for CSS frameworks.
+
+    - name: github-pages
+      kind: deploy-target
+      group: automation
+      lifecycle: runtime
+      role: >-
+        Deploy target hosting the built static site, delivered by the
+        deploy.yml GitHub Actions workflow.
+      status: active
+      source_of_truth: .github/workflows/deploy.yml
+      rationale: >-
+        acknowledged-missing-signal: GitHub Pages is the site's deploy target;
+        kind deploy-target is operator-curated and never auto-emitted by the
+        discovery probe per the tech-stack-discovery spec.
+
+  overrides:
+    - name: mkdocs
+      inherit: false
+      rationale: >-
+        Blog publishes its site and knowledge base with Astro, not MkDocs;
+        this repo carries no docs/ MkDocs tree or mkdocs.yml.
+
+    - name: claude-code-plugin
+      inherit: false
+      rationale: >-
+        Blog is an Astro web application, not a Claude Code plugin; it ships no
+        skills/<name>/SKILL.md or agents/ layout, so the plugin-shape entry
+        does not apply.
