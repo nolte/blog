@@ -6,6 +6,8 @@ lang: en
 translationKey: welcome
 tags: ["meta", "knowledge-base"]
 aiGenerated: true
+primaryAudience: A
+secondaryAudiences: []
 ---
 
 This blog is two things at once: a public log of the software projects I build,
