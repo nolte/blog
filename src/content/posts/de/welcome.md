@@ -6,6 +6,8 @@ lang: de
 translationKey: welcome
 tags: ["meta", "knowledge-base"]
 aiGenerated: true
+primaryAudience: A
+secondaryAudiences: []
 ---
 
 Dieser Blog ist zwei Dinge gleichzeitig: ein öffentliches Log über die
