@@ -1,0 +1,240 @@
+{
+  "operation": "audit",
+  "operation_version": "1",
+  "repository": "blog",
+  "ran_at": "2026-06-06T17:19:45Z",
+  "language_summary": [
+    { "language": "en", "files": 1 },
+    { "language": "de", "files": 1 }
+  ],
+  "pipeline_metadata": {
+    "en": {
+      "readability": {
+        "library": "nolte-readability-lix",
+        "library_version": "1.0.0",
+        "tokenizer": "builtin-unicode-regex",
+        "tokenizer_version": "1.0.0",
+        "long_word_threshold": 6
+      }
+    },
+    "de": {
+      "tool": "languagetool-http",
+      "version": "2026-05-26 17:36:45 +0000",
+      "configured_path": "https://api.languagetool.org/v2",
+      "readability": {
+        "library": "nolte-readability-lix",
+        "library_version": "1.0.0",
+        "tokenizer": "builtin-unicode-regex",
+        "tokenizer_version": "1.0.0",
+        "long_word_threshold": 6,
+        "decompounding": false
+      }
+    }
+  },
+  "inventory_findings": [
+    {
+      "kind": "vale-unavailable",
+      "language": "en",
+      "file": null,
+      "message": "Vale 3.14.1 is installed but no .vale.ini or .vale/ config was found in this repository; EN D3/D4 Vale mechanics are skipped for this scan."
+    }
+  ],
+  "findings": [
+    {
+      "id": "2ba2a1f6bf89de94",
+      "severity": "warning",
+      "dimension": "D3",
+      "file": "src/content/posts/de/how-lektorat-audits-my-docs.md",
+      "line_start": 56,
+      "line_end": 56,
+      "message": "Opening German guillemet „ paired with ASCII closing \" instead of typographic “; first word of quoted speech must also be capitalised.",
+      "rule": "FALSCHES_ANFUEHRUNGSZEICHEN / GROSSSCHREIBUNG_WOERTLICHER_REDE",
+      "language": "de",
+      "audience": ["A"],
+      "evidence": "„ein Redakteur, der still umschreiben kann, was er findet\" ist die falsche Form.",
+      "suggested_resolution": "Change to: „Ein Redakteur, der still umschreiben kann, was er findet“ ist die falsche Form."
+    },
+    {
+      "id": "4395facbcc3bed6b",
+      "severity": "warning",
+      "dimension": "D3",
+      "file": "src/content/posts/de/how-lektorat-audits-my-docs.md",
+      "line_start": 60,
+      "line_end": 60,
+      "message": "Two quoted phrases open with „ but close with ASCII \" instead of typographic “.",
+      "rule": "FALSCHES_ANFUEHRUNGSZEICHEN",
+      "language": "de",
+      "audience": ["A"],
+      "evidence": "„lektoriere diesen Post\" oder „prüfe die Docs auf Lesbarkeit\" aus",
+      "suggested_resolution": "Replace both closing \" with “: „lektoriere diesen Post“ oder „prüfe die Docs auf Lesbarkeit“ aus."
+    },
+    {
+      "id": "fb75f154071c4e15",
+      "severity": "warning",
+      "dimension": "D3",
+      "file": "src/content/posts/de/how-lektorat-audits-my-docs.md",
+      "line_start": 64,
+      "line_end": 64,
+      "message": "Quoted phrase opens with „ but closes with ASCII \" instead of typographic “.",
+      "rule": "FALSCHES_ANFUEHRUNGSZEICHEN",
+      "language": "de",
+      "audience": ["A"],
+      "evidence": "einen deutschen Satz zu „reparieren\", indem es ihn englisch macht",
+      "suggested_resolution": "Replace closing \" with “: „reparieren“."
+    },
+    {
+      "id": "94d257c10c6e4457",
+      "severity": "warning",
+      "dimension": "D4",
+      "file": "src/content/posts/de/how-lektorat-audits-my-docs.md",
+      "line_start": 17,
+      "line_end": 17,
+      "message": "Informal du-address (dir) on an explanation-mode page; spec requires impersonal voice for explanation/reference/glossary pages.",
+      "rule": "DE-address-form",
+      "language": "de",
+      "audience": ["A"],
+      "evidence": "Falls dir das Plugin noch nichts sagt:",
+      "suggested_resolution": "Recast as impersonal: \"Wer das Plugin noch nicht kennt:\" — also apply at line 66 (\"bevor er dich erreichte\")."
+    },
+    {
+      "id": "ad1ec320643978ab",
+      "severity": "warning",
+      "dimension": "D4",
+      "file": "src/content/posts/de/how-lektorat-audits-my-docs.md",
+      "line_start": 66,
+      "line_end": 66,
+      "message": "Second instance of informal du-address (dich); consistent with line 17 but still violates the impersonal-voice rule for explanation-mode.",
+      "rule": "DE-address-form",
+      "language": "de",
+      "audience": ["A"],
+      "evidence": "bevor er dich erreichte",
+      "suggested_resolution": "Replace with impersonal phrasing: \"bevor er den Leser erreichte\" or \"bevor dieser Beitrag veröffentlicht wurde\"."
+    },
+    {
+      "id": "0c578962ac0b4e3a",
+      "severity": "suggestion",
+      "dimension": "D1",
+      "file": "src/content/posts/de/how-lektorat-audits-my-docs.md",
+      "line_start": 15,
+      "line_end": 15,
+      "message": "Opening paragraph runs ~4 sentences in one block; splitting after the motivation clause eases entry for explanation-mode readers.",
+      "rule": "paragraph-length-heuristic",
+      "language": "de",
+      "audience": ["A", "C"],
+      "evidence": "Jeder Beitrag auf dieser Seite ist KI-entworfen und danach von Hand kuratiert. Dem Entwerfen vertraue ich; das Kuratieren will ich nicht",
+      "suggested_resolution": "Break into two paragraphs at the em-dash or after the semicolon to separate motivation from tool introduction."
+    },
+    {
+      "id": "534dd9f8b2acfd88",
+      "severity": "suggestion",
+      "dimension": "D1",
+      "file": "src/content/posts/de/how-lektorat-audits-my-docs.md",
+      "line_start": 56,
+      "line_end": 56,
+      "message": "Paragraph contains ~4 sentences with a long embedded quoted clause; dominant lever is ASL.",
+      "rule": "paragraph-length-heuristic",
+      "language": "de",
+      "audience": ["A", "C"],
+      "evidence": "Der Grund für die Trennung: „Ein Redakteur, der still umschreiben kann, was er findet“ ist die falsche Form.",
+      "suggested_resolution": "Split after \"nicht nur durch guten Willen.\" to separate justification from the operational consequence."
+    },
+    {
+      "id": "ba98476451a92a0e",
+      "severity": "suggestion",
+      "dimension": "D2",
+      "file": "src/content/posts/de/how-lektorat-audits-my-docs.md",
+      "line_start": 15,
+      "line_end": 15,
+      "message": "Domain term \"Register-Drift\" used without definition on first use; not all technical readers have an editorial-theory background.",
+      "rule": "unexplained-jargon",
+      "language": "de",
+      "audience": ["A"],
+      "evidence": "undefinierten Jargon und Register-Drift abzuklopfen ist genau die Arbeit",
+      "suggested_resolution": "Add an inline gloss: \"Register-Drift (unbeabsichtigte Tonanpassungen im Textverlauf)\"."
+    },
+    {
+      "id": "6db6bc4c22fd1082",
+      "severity": "suggestion",
+      "dimension": "D1",
+      "file": "src/content/posts/en/how-lektorat-audits-my-docs.md",
+      "line_start": 15,
+      "line_end": 15,
+      "message": "Opening paragraph contains ~4 sentences in one block; splitting improves entry for explanation-mode readers.",
+      "rule": "paragraph-length-heuristic",
+      "language": "en",
+      "audience": ["A", "C"],
+      "evidence": "Every post on this site is AI-drafted and then curated by hand. The drafting I trust; the curation I don't want to do by eyeball",
+      "suggested_resolution": "Break after \"The drafting I trust;\" to separate motivation from tool introduction."
+    },
+    {
+      "id": "879612150e1d4046",
+      "severity": "suggestion",
+      "dimension": "D1",
+      "file": "src/content/posts/en/how-lektorat-audits-my-docs.md",
+      "line_start": 31,
+      "line_end": 31,
+      "message": "Paragraph packs ~4 sentences covering three distinct tools (LIX, Vale, LanguageTool); LWP is the dominant lever.",
+      "rule": "paragraph-length-heuristic",
+      "language": "en",
+      "audience": ["A", "C"],
+      "evidence": "D1 leans on LIX, a readability metric computed the same way for English and German, with a target corridor that depends on the page type.",
+      "suggested_resolution": "Split after \"depends on the page type.\" so the Vale/LanguageTool sentence stands as its own short paragraph."
+    },
+    {
+      "id": "7f6904d5f3bc5407",
+      "severity": "suggestion",
+      "dimension": "D1",
+      "file": "src/content/posts/en/how-lektorat-audits-my-docs.md",
+      "line_start": 56,
+      "line_end": 56,
+      "message": "Paragraph contains ~4 sentences; embedded quoted rationale and its mechanism crowd one block.",
+      "rule": "paragraph-length-heuristic",
+      "language": "en",
+      "audience": ["A", "C"],
+      "evidence": "The reason for the split is that \"an editor that can silently rewrite what it finds\" is the wrong shape.",
+      "suggested_resolution": "Break after \"wrong shape.\" to isolate the architectural justification from its runtime consequence."
+    },
+    {
+      "id": "a4898a19fa606ca9",
+      "severity": "suggestion",
+      "dimension": "D1",
+      "file": "src/content/posts/en/how-lektorat-audits-my-docs.md",
+      "line_start": 78,
+      "line_end": 78,
+      "message": "Closing paragraph contains ~4 sentences; the long third sentence (corridor, stable ID, git trail) drives ASL above the comfortable reading band.",
+      "rule": "paragraph-length-heuristic",
+      "language": "en",
+      "audience": ["A", "C"],
+      "evidence": "It applies the same corridor to every paragraph, records each finding with a stable ID so a dismissal I made last week still holds",
+      "suggested_resolution": "Split before \"and leaves an audit trail in git\" to form two shorter sentences."
+    },
+    {
+      "id": "eca25344d5cfa0ba",
+      "severity": "suggestion",
+      "dimension": "D2",
+      "file": "src/content/posts/en/how-lektorat-audits-my-docs.md",
+      "line_start": 15,
+      "line_end": 15,
+      "message": "Term \"register drift\" used without definition on first use; readers without an editorial background may not know it.",
+      "rule": "unexplained-jargon",
+      "language": "en",
+      "audience": ["A"],
+      "evidence": "reading every paragraph for sentence length, undefined jargon, and register drift is the work I'm bad at",
+      "suggested_resolution": "Add an inline gloss: \"register drift (unintended shifts in tone or formality across a document)\"."
+    },
+    {
+      "id": "0c6d12f80441dffb",
+      "severity": "suggestion",
+      "dimension": "D2",
+      "file": "src/content/posts/en/how-lektorat-audits-my-docs.md",
+      "line_start": 39,
+      "line_end": 39,
+      "message": "\"unified diff\" used without definition on first use; a subset of audience A may not be familiar with the term.",
+      "rule": "unexplained-jargon",
+      "language": "en",
+      "audience": ["A"],
+      "evidence": "It walks the findings in severity order and shows me a unified diff for each.",
+      "suggested_resolution": "Add a short parenthetical: \"a unified diff (a standard patch format showing changed lines in context)\"."
+    }
+  ]
+}
