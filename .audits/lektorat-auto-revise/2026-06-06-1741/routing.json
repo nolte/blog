@@ -1,0 +1,29 @@
+{
+  "routed_at": "2026-06-06T17:41:00Z",
+  "files": [
+    {
+      "file": "src/content/posts/en/hero-images-from-prompt-to-svg.md",
+      "class": "blog-post",
+      "reason": "carries cross-language binding key `translationKey` in frontmatter",
+      "author": "blog-author (assisted)",
+      "pre_revision_findings": 1,
+      "post_revision_findings_addressed": 1
+    },
+    {
+      "file": "src/content/posts/de/hero-images-from-prompt-to-svg.md",
+      "class": "blog-post",
+      "reason": "carries cross-language binding key `translationKey` in frontmatter",
+      "author": "blog-author (assisted)",
+      "pre_revision_findings": 2,
+      "post_revision_findings_addressed": 2
+    }
+  ],
+  "rejected": [],
+  "inventory_conditions": [
+    {
+      "kind": "vale-unavailable",
+      "language": "en",
+      "message": "vale binary present but no .vale.ini in worktree or any parent; EN D3 / Vale-driven D4 mechanics skipped. Not remediable by an author route; surfaced to operator. See roadmap R-6 (Vale wiring)."
+    }
+  ]
+}

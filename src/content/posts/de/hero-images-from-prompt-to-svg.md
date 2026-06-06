@@ -33,7 +33,7 @@ Und `BaseLayout.astro` gibt das Meta-Tag nur aus, wenn ein Wert vorhanden ist:
 {ogImage && <meta property="og:image" content={ogImage} />}
 ```
 
-Der Vertrag ist also schlicht: einen Pfad in `heroImage` legen, und der Beitrag bekommt bei jedem Social-Unfurl eine OG-Karte. Nichts rendert das Bild, nichts erzeugt es. Dieser Teil war immer als eigene Aufgabe gedacht, und ich wollte ihn nicht jedes Mal von Hand erledigen.
+Der Vertrag ist also schlicht: einen Pfad in `heroImage` legen, und der Beitrag bekommt bei jedem Social-Unfurl (wenn eine Plattform die Linkvorschau abruft und rendert) eine OG-Karte. Nichts rendert das Bild, nichts erzeugt es. Dieser Teil war immer als eigene Aufgabe gedacht, und ich wollte ihn nicht jedes Mal von Hand erledigen.
 
 ## Warum zwei Agents, nicht ein Tool
 
@@ -85,7 +85,7 @@ Der zweite Agent löst ein Problem, das ich nicht vorhergesehen hätte. KI-Bildg
 
 [`png-to-transparent-svg`](https://github.com/nolte/claude-shared/blob/027427f/agents/png-to-transparent-svg.md) erkennt dieses Muster vor dem Vektorisieren. Er tastet die Eckpixel ab, klassifiziert den Hintergrund als graues Schachbrett oder einfarbige Fläche, schreibt die qualifizierenden Pixel auf `alpha=0` um und schickt erst dann das gesäuberte PNG durch [vtracer](https://github.com/visioncortex/vtracer). Danach entfernt er jeden bildschirmfüllenden Hintergrund-Pfad, den der Vektorisierer noch ausgibt.
 
-Er meldet pro Datei eine Diagnose, bevor er irgendetwas anfasst. Außerdem hat er eine Plausibilitätsprüfung, die das Klauen wert ist: Ein typisches Icon ist zu 70 bis 90 Prozent Hintergrund, wenn also weniger als 30 Prozent der Pixel entfernt werden, ist das ein Warnsignal, das er meldet, statt weiterzumachen. Außerdem überschreibt er nie die Eingabe — das gesäuberte PNG ist eine neue Datei.
+Er meldet pro Datei eine Diagnose, bevor er irgendetwas anfasst. Außerdem hat er eine Plausibilitätsprüfung, die das Klauen wert ist: Ein typisches Icon ist zu 70 bis 90 Prozent Hintergrund, wenn also weniger als 30 Prozent der Pixel entfernt werden, ist das ein Warnsignal, das er meldet, statt weiterzumachen. Zudem überschreibt er nie die Eingabe — das gesäuberte PNG ist eine neue Datei.
 
 ## Wo das den Blog zurücklässt
 

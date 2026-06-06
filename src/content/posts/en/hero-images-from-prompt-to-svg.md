@@ -33,7 +33,7 @@ And `BaseLayout.astro` only emits the meta tag when a value is present:
 {ogImage && <meta property="og:image" content={ogImage} />}
 ```
 
-So the contract is simple: drop a path into `heroImage`, and the post gets an OG card on every social unfurl. Nothing renders the image, nothing generates it. That part was always meant to be a separate job, and I did not want to do it by hand each time.
+So the contract is simple: drop a path into `heroImage`, and the post gets an OG card on every social unfurl (when a platform fetches and renders the link preview). Nothing renders the image, nothing generates it. That part was always meant to be a separate job, and I did not want to do it by hand each time.
 
 ## Why two agents, not one tool
 
@@ -85,7 +85,7 @@ The second agent solves a problem I would not have predicted. AI image generator
 
 [`png-to-transparent-svg`](https://github.com/nolte/claude-shared/blob/027427f/agents/png-to-transparent-svg.md) detects that pattern before vectorising. It samples the corner pixels, classifies the background as a grey checkerboard or a flat color, rewrites the qualifying pixels to `alpha=0`, and only then runs the cleaned PNG through [vtracer](https://github.com/visioncortex/vtracer). Afterwards it strips any full-canvas background path the vectoriser still emits.
 
-It reports a diagnosis per file before touching anything. It also applies a sanity check worth stealing: a typical icon is 70 to 90 percent background, so if fewer than 30 percent of pixels get removed, that is a red flag it surfaces instead of pressing on. It also never overwrites the input — the cleaned PNG is a new file.
+It reports a diagnosis per file before touching anything. It also applies a sanity check worth stealing: a typical icon is 70 to 90 percent background, so if fewer than 30 percent of pixels get removed, that is a red flag it surfaces instead of pressing on. And it never overwrites the input — the cleaned PNG is a new file.
 
 ## Where this leaves the blog
 
