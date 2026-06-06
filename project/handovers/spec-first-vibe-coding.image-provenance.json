@@ -1,0 +1,8 @@
+{
+  "provider": "cloudflare",
+  "model": "@cf/black-forest-labs/flux-1-schnell",
+  "source": "https://api.cloudflare.com/client/v4/accounts/<account>/ai/run/@cf/black-forest-labs/flux-1-schnell",
+  "prompt": "Minimalist editorial illustration for a software developer blog, wide social banner. Strictly monochrome zinc and charcoal palette: deep charcoal background (hex 18181b), off-white line work (hex fafafa), cool neutral gray midtones, no other colors. Concept: a structured written specification document or blueprint on the left, its boxes and lines flowing rightward and resolving into a clean running application window on the right. Flat geometric vector aesthetic, thin precise strokes, subtle isometric depth, generous negative space, faint dotted grid background. Calm, technical, precise mood. No readable text — only abstract horizontal lines suggesting paragraphs and code. Crisp, high contrast, modern. Wide cinematic 1200x630 composition.",
+  "timestamp": "2026-06-06T20:11:33Z",
+  "mime_type": "image/jpeg"
+}
