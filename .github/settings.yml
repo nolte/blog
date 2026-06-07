@@ -24,6 +24,19 @@ repository:
   # call on every pull-request-merge run.
   delete_branch_on_merge: true
 
+# Local label override. The `automerge` label is already declared upstream in
+# gh-plumbing:.github/commons-settings.yml and pulled in via `_extends`, but the
+# Settings app currently reconciles this repo's `repository` and `branches`
+# settings without creating the `_extends`-provided labels (only the GitHub
+# default label set is present). Declaring the label here engages the label
+# plugin directly so `automerge` exists, which the `pull-request-merge` flow
+# needs to trigger the reusable automerge workflow via the label path instead
+# of the `gh pr merge --auto` fallback.
+labels:
+  - name: automerge
+    color: "#19F700"
+    description: "Allow automatic Merge."
+
 branches:
   - name: develop
     protection:
