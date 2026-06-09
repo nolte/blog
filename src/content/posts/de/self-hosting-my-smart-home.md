@@ -106,14 +106,14 @@ Die ersten beiden Repos öffentlich zu machen war keine Voreinstellung — priva
 
 **Öffentlich-als-Standard erzwingt Secrets-Hygiene.** Wenn ein Repo offen ist, hört „keine Anmeldedaten einchecken“ auf, ein Nice-to-have zu sein. Deshalb kommen ESPHome-Secrets zur Kompilierzeit aus `pass`, und deshalb trägt nichts im Cluster-Repo ein Passwort fest ein — die Disziplin wird vom Publikum erzwungen, und der Aufbau ist dadurch sicherer.
 
-**Offen schlägt einen Screenshot.** „Ich hoste mein Smart Home selbst“ ist eine Behauptung. Ein Repo, in dem du lesen kannst, wie eine Gosund-Steckdose ein Basis-Paket zusammensetzt oder wie ein Service-Set Mosquitto mit zigbee2mqtt verdrahtet, ist der Beleg. Für jeden, der entscheidet, ob der Ansatz das Wochenende wert ist, beantwortet funktionierendes YAML Fragen, die ein Blogbeitrag nicht kann.
+**Offenheit schlägt einen Screenshot.** „Ich hoste mein Smart Home selbst“ ist eine Behauptung. Ein Repo, in dem du lesen kannst, wie eine Gosund-Steckdose ein Basis-Paket zusammensetzt oder wie ein Service-Set Mosquitto mit zigbee2mqtt verdrahtet, ist der Beleg. Für jeden, der entscheidet, ob der Ansatz das Wochenende wert ist, beantwortet funktionierendes YAML Fragen, die ein Blogbeitrag nicht kann.
 
 ## Was es ehrlich kostet
 
-Das ist mehr Arbeit als ein Hub und eine App, und ich tue nicht so, als wäre es anders. ESPHome heißt, sich um Firmware und das gelegentliche Serial-Kabel zu kümmern. Ein Cluster aus Talos plus ArgoCD ist ein echter Einstieg — GitOps zahlt sich über Jahre aus, nicht am ersten Tag, und das erste Bootstrap ist der schwerste Teil.
+Das ist mehr Arbeit als ein Hub und eine App, und ich tue nicht so, als wäre es anders. ESPHome heißt, sich um Firmware und das gelegentliche Serial-Kabel zu kümmern. Ein Cluster aus Talos plus ArgoCD ist ein echtes Stück Arbeit — GitOps zahlt sich über Jahre aus, nicht am ersten Tag, und das erste Bootstrap ist der schwerste Teil.
 
-Wenn dein Ziel ist, heute Abend per Handy eine Lampe einzuschalten, kauf das Bridge.
+Wenn du heute Abend einfach nur per Handy eine Lampe einschalten willst, kauf dir die Bridge.
 
-Was die Kosten kaufen, ist Eigentum. Die Geräte funktionieren weiter, wenn ein Upstream-Dienst abgeschaltet wird, weil es kein Upstream gibt. Das ganze System ist lesbar, umbaubar und aus Git neu aufbaubar.
+Was du dir mit dem Aufwand erkaufst, ist Eigentum. Die Geräte funktionieren weiter, wenn ein Upstream-Dienst abgeschaltet wird — weil es gar keinen Upstream gibt, von dem sie abhängen. Das ganze System ist lesbar, lässt sich umbauen und aus Git neu aufbauen.
 
-Und die zwei Repos, die die wiederverwendbare Hälfte davon enthalten, sind offen draußen — nicht, weil alles öffentlich sein sollte, sondern weil die Teile, die jemand anderem helfen, keinen Grund haben, versteckt zu sein.
+Und die zwei Repos, die die wiederverwendbare Hälfte davon enthalten, liegen offen da — nicht, weil alles öffentlich sein sollte, sondern weil die Teile, die jemand anderem helfen, keinen Grund haben, versteckt zu sein.
