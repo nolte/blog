@@ -1,6 +1,6 @@
 ---
 title: "Wie Lektorat meine Docs prüft, bevor ich sie veröffentliche"
-description: "Lektorat ist die Redaktionsschicht in meinem geteilten Claude-Code-Plugin. Es prüft einen Beitrag gegen fünf Qualitätsdimensionen und läuft in drei Modi — audit, patch, revise — damit ich KI-entworfene Prosa per Checkliste kuratiere, nicht per Augenmaß."
+description: "Lektorat ist die Redaktionsschicht in meinem geteilten Claude-Code-Plugin. Es prüft einen Beitrag gegen sechs Qualitätsdimensionen und läuft in drei Modi — audit, patch, revise — damit ich KI-entworfene Prosa per Checkliste kuratiere, nicht per Augenmaß."
 pubDate: 2026-06-06
 updatedDate: 2026-06-06
 lang: de
@@ -18,13 +18,14 @@ Wer das Plugin noch nicht kennt: Der [Baseline-Beitrag](/de/blog/claude-shared-b
 
 ## Was ein Redakteur tatsächlich prüfen muss
 
-Der schwierige Teil am Redigieren ist nicht, einen Tippfehler zu korrigieren. Es ist, mehrere voneinander unabhängige Prüfungen gleichzeitig im Kopf zu halten und sie gleichmäßig über ein ganzes Dokument anzuwenden. Lektorat benennt diese Prüfungen als fünf Dimensionen, definiert im Spec unter `spec/project/lektorat/`:
+Der schwierige Teil am Redigieren ist nicht, einen Tippfehler zu korrigieren. Es ist, mehrere voneinander unabhängige Prüfungen gleichzeitig im Kopf zu halten und sie gleichmäßig über ein ganzes Dokument anzuwenden. Lektorat benennt diese Prüfungen als sechs Dimensionen, definiert im Spec unter `spec/project/lektorat/`:
 
 - **D1 — Lesbarkeit.** Haben Sätze und Absätze die richtige Länge für den Zweck der Seite?
 - **D2 — Verständlichkeit.** Gibt es Jargon, ein nicht ausgeschriebenes Akronym oder eine versteckte Voraussetzung, die der Leser nicht auflösen kann?
 - **D3 — Rechtschreibung und Grammatik.** Die mechanische Ebene.
 - **D4 — Stil.** Aktiv statt Passiv, konsistente Zeitform, Überschriften in Satzschreibung, kein Register, das mittendrin kippt.
 - **D5 — Audience-Fit.** Passt die Seite zu der Zielgruppe, die sie zu bedienen vorgibt?
+- **D6 — Idiomatik.** Klingt der Text wie original geschriebenes Deutsch — oder schimmern Lehnübersetzungen und englische Satzmuster durch?
 
 Jeder Befund hat eine von drei Severities: `critical`, `warning` oder `suggestion`. Diese Reihenfolge macht den Report handhabbar — ich behebe die kritischen, ich lese die Warnungen, und ich behandle die Vorschläge als optional.
 
@@ -32,7 +33,7 @@ Die Dimensionen sind nicht alle handgestrickte Heuristiken. D1 stützt sich auf 
 
 ## Drei Arten, es zu betreiben: audit, patch, revise
 
-Dieselbe Fünf-Dimensionen-Prüfung treibt drei Operationen an, und die richtige zu wählen ist der größte Teil davon, das Werkzeug gut zu benutzen.
+Dieselbe Sechs-Dimensionen-Prüfung treibt drei Operationen an, und die richtige zu wählen ist der größte Teil davon, das Werkzeug gut zu benutzen.
 
 `audit` ist read-only. Es scannt das Ziel, schreibt einen Report und fasst nichts anderes an. Es lässt sich gefahrlos unbeaufsichtigt laufen — in einem Pre-Commit-Hook, als Release-Gate oder einfach, weil ich wissen will, wie groß ein Rückstand ist.
 
@@ -47,7 +48,7 @@ Lektorat besteht aus zwei Teilen, und die Grenze zwischen ihnen ist Absicht. `le
 ```mermaid
 flowchart LR
     Me([ich]) -->|"lektoriere diesen Post"| Skill["lektorat-apply<br/>(Skill: Dialog + Schreibzugriff)"]
-    Skill -->|"beauftragt, read-only"| Scanner["lektorat-scanner<br/>(Agent: D1–D5-Erkennung)"]
+    Skill -->|"beauftragt, read-only"| Scanner["lektorat-scanner<br/>(Agent: D1–D6-Erkennung)"]
     Scanner -->|Findings-Inventar| Skill
     Skill -->|audit / patch / revise| Trail[(".audits/lektorat/&lt;Zeitstempel&gt;/")]
     Skill -->|Diff + Freigabe| Me

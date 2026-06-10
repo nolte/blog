@@ -22,7 +22,7 @@ von Claude aus einem kurzen Briefing entworfen — ein Thema, ein paar
 Quelldateien, manchmal das Protokoll einer Debugging-Session — und dann
 kuratiere ich das Ergebnis. Das betrifft Ton, Genauigkeit und die kleinen
 Einschätzungen, die wichtig werden, wenn man die eigene Arbeit beschreibt.
-Das „AI"-Badge oben am Beitrag macht den Ablauf transparent.
+Das „AI“-Badge oben am Beitrag macht den Ablauf transparent.
 
 Die englische Fassung entsteht immer zuerst. Die deutsche Übersetzung folgt
 im selben Pull-Request, damit beide nicht auseinanderlaufen.
