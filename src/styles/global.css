@@ -1,9 +1,118 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@theme {
+/* ---------------------------------------------------------------------------
+   nolte corporate design — theme layer
+   Implements project/design/corporate-design.md §3 (semantic colour tokens),
+   §4 (typography), §6.4 (brand prose). Values are the interim palette derived
+   from the canonical OKLCH anchors in claude-shared
+   spec/design/corporate-design-colors; replace wholesale when the DTCG token
+   bundle ships (see corporate-design.md §13 migration note).
+
+   How it works (Tailwind v4):
+   - The mode-resolving values live as raw `--c-*` custom properties on :root,
+     overridden under `prefers-color-scheme: dark`.
+   - `@theme inline` maps each `--color-*` utility to `var(--c-*)` so the
+     generated utilities (bg-surface, text-content, text-link, …) follow the
+     mode switch at runtime instead of baking a light value at build time.
+   - A manual `[data-theme]` toggle is intentionally deferred (corporate-
+     design.md §11); this layer is automatic light/dark only for now.
+--------------------------------------------------------------------------- */
+
+:root {
+  /* surfaces */
+  --c-surface: #f4f1ea; /* warm bone white — page */
+  --c-surface-subtle: #ede9de; /* inset / code / tag */
+  --c-surface-elevated: #fcfbf7; /* card / popover */
+
+  /* text */
+  --c-content: #23242b; /* primary text */
+  --c-muted: #5b5a52; /* secondary text */
+  --c-faint: #7a786e; /* dates, captions */
+
+  /* lines */
+  --c-line: #ded9cc; /* divider / hairline */
+  --c-line-strong: #cdc7b6; /* card outline / inputs */
+
+  /* brand primary — muted indigo */
+  --c-brand: #4a529d; /* solid fill / primary button */
+  --c-brand-hover: #3e4585; /* hover / pressed */
+  --c-brand-fg: #f4f1ea; /* text/icon on brand fill */
+  --c-link: #41488c; /* link & accent text on surface (AA on surface) */
+
+  /* brand secondary — warm moss green */
+  --c-moss: #4f9d69; /* fill (tags, success) */
+  --c-moss-text: #3f7e54; /* moss text on surface */
+
+  /* brand accent — warm amber (functional emphasis only) */
+  --c-accent: #e0a23c;
+  --c-accent-fg: #3a2d12;
+
+  /* focus ring */
+  --c-ring: #5b5fc7;
+
+  /* tinted overlays */
+  --c-selection: #4a529d2e; /* ≈18% */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-surface: #20222a; /* deep warm charcoal (never #000) */
+    --c-surface-subtle: #262833;
+    --c-surface-elevated: #2b2e39;
+
+    --c-content: #f1eee5;
+    --c-muted: #aeaca2;
+    --c-faint: #85837a;
+
+    --c-line: #383b45;
+    --c-line-strong: #454956;
+
+    /* re-pulled per mode, never RGB-inverted (spec §Light/dark) */
+    --c-brand: #8e92e6; /* soft cobalt-violet */
+    --c-brand-hover: #a2a6ee;
+    --c-brand-fg: #1b1d24;
+    --c-link: #a6aaef;
+
+    --c-moss: #6fbf8a; /* soft fern green */
+    --c-moss-text: #7fcf9a;
+
+    --c-accent: #e0a23c;
+    --c-accent-fg: #3a2d12;
+
+    --c-ring: #8e92e6;
+
+    --c-selection: #8e92e63d; /* ≈24% */
+  }
+}
+
+@theme inline {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-surface: var(--c-surface);
+  --color-surface-subtle: var(--c-surface-subtle);
+  --color-surface-elevated: var(--c-surface-elevated);
+
+  --color-content: var(--c-content);
+  --color-muted: var(--c-muted);
+  --color-faint: var(--c-faint);
+
+  --color-line: var(--c-line);
+  --color-line-strong: var(--c-line-strong);
+
+  --color-brand: var(--c-brand);
+  --color-brand-hover: var(--c-brand-hover);
+  --color-brand-fg: var(--c-brand-fg);
+  --color-link: var(--c-link);
+
+  --color-moss: var(--c-moss);
+  --color-moss-text: var(--c-moss-text);
+
+  --color-accent: var(--c-accent);
+  --color-accent-fg: var(--c-accent-fg);
+
+  --color-ring: var(--c-ring);
 }
 
 @layer base {
@@ -11,8 +120,38 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-zinc-50 text-zinc-900 antialiased;
+    background-color: var(--c-surface);
+    color: var(--c-content);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  /* brand text selection */
+  ::selection {
+    background-color: var(--c-selection);
+  }
+
+  /* visible, on-brand keyboard focus (WCAG 2.2 SC 1.4.11 ≥ 3:1) */
+  :focus-visible {
+    outline: 2px solid var(--c-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* honour reduced-motion globally */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   /* rehype-mermaid (in dev) emits `<pre class="mermaid">`. Tailwind Typography
      styles every `<pre>` inside `.prose` with a dark background + padding +
      rounded corners — appropriate for code blocks, but it becomes a dark
@@ -26,30 +165,43 @@
     border-radius: 0;
     overflow: visible;
   }
-  /* The inline SVG mermaid renders inside that <pre> should also not pick up
-     stray prose styles. */
   pre.mermaid svg {
     display: block;
     margin: 0 auto;
     max-width: 100%;
   }
 
-  /* Match Tailwind v4's default `dark:` variant strategy (prefers-color-scheme)
-     so the body background stays in sync with `dark:prose-invert`, header
-     `dark:bg-zinc-950/80`, and friends. The site has no JS-driven toggle. */
+  /* Mermaid is pinned to the `default` (light) theme in both rehype-mermaid
+     (build) and client-side dev. In dark mode we recolour the rendered SVG
+     with a filter. A real brand-themed light/dark Mermaid pair (corporate-
+     design.md §9) is a follow-up that also touches astro.config.mjs. */
   @media (prefers-color-scheme: dark) {
-    body {
-      @apply bg-zinc-950 text-zinc-100;
-    }
-    /* Mermaid is pinned to the `default` (light) theme in both rehype-mermaid
-       (build) and client-side dev. In dark mode we recolour the rendered SVG
-       with a filter: invert turns the white background dark and the dark text
-       light; hue-rotate keeps coloured accents looking themselves. Targets
-       both the prod inline SVG (svg.flowchart) and the dev-rendered output
-       under `<pre class="mermaid">`. */
     svg.flowchart,
     pre.mermaid svg {
       filter: invert(0.93) hue-rotate(180deg);
     }
   }
+}
+
+/* Brand prose — bind @tailwindcss/typography to the mode-resolving tokens so
+   article bodies follow light/dark without `prose-invert`. Unlayered so it
+   wins over the plugin's own `.prose` variable defaults. Components use a bare
+   `prose` class (no `prose-zinc dark:prose-invert`). */
+.prose {
+  --tw-prose-body: var(--c-content);
+  --tw-prose-headings: var(--c-content);
+  --tw-prose-lead: var(--c-muted);
+  --tw-prose-links: var(--c-link);
+  --tw-prose-bold: var(--c-content);
+  --tw-prose-counters: var(--c-faint);
+  --tw-prose-bullets: var(--c-line-strong);
+  --tw-prose-hr: var(--c-line);
+  --tw-prose-quotes: var(--c-muted);
+  --tw-prose-quote-borders: var(--c-brand);
+  --tw-prose-captions: var(--c-faint);
+  --tw-prose-code: var(--c-content);
+  --tw-prose-pre-code: var(--c-content);
+  --tw-prose-pre-bg: var(--c-surface-subtle);
+  --tw-prose-th-borders: var(--c-line-strong);
+  --tw-prose-td-borders: var(--c-line);
 }
