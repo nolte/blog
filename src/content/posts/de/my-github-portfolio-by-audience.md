@@ -12,13 +12,13 @@ primaryAudience: A
 secondaryAudiences: [B]
 ---
 
-Wer mein GitHub-Profil öffnet und nach „zuletzt gepusht" sortiert, bekommt eine Liste, die zerstreut wirkt: ein Pflanzenpflege-System, ein Kubernetes-Home-Lab, drei Claude-Code-Plugins, ein Terraform-Bootstrap für die Organisation selbst, ein Verhaltenspaket für einen Roboter. Der Snapshot weiter unten ist die aktive Menge ohne Forks und ohne Archive, Stand 2026-05-30. Die Zerstreuung ist echt, aber sie löst sich sauber auf, sobald man jedem Repo eine Frage stellt: Für wen ist es eigentlich?
+Wer mein GitHub-Profil öffnet und nach „zuletzt gepusht“ sortiert, bekommt eine Liste, die zerstreut wirkt: ein Pflanzenpflege-System, ein Kubernetes-Home-Lab, drei Claude-Code-Plugins, ein Terraform-Bootstrap für die Organisation selbst, ein Verhaltenspaket für einen Roboter. Der Snapshot weiter unten ist die aktive Menge ohne Forks und ohne Archive, Stand 2026-05-30. Die Zerstreuung ist echt, aber sie löst sich sauber auf, sobald man jedem Repo eine Frage stellt: Für wen ist es eigentlich?
 
 Diese Frage teilt das Portfolio in zwei Stapel. Der eine Stapel ist Software, die jemand außer mir installieren und betreiben soll. Der andere Stapel existiert, damit der erste Stapel ausgeliefert werden und laufen kann. Der zweite Stapel ist deutlich größer — und dieses Verhältnis ist das Ehrlichste, was das Profil über meine Arbeitsweise sagt.
 
 ## Der Test, den ich an jedes Repo anlege
 
-Die Trennung ist nicht „Bibliothek gegen Anwendung" und auch nicht „groß gegen klein". Es geht um den Leser am anderen Ende.
+Die Trennung ist nicht „Bibliothek gegen Anwendung“ und auch nicht „groß gegen klein“. Es geht um den Leser am anderen Ende.
 
 Ein Repo ist ein **Produkt**, wenn sein Erfolg daran gemessen wird, dass jemand anderes es benutzt: ein Home-Assistant-Nutzer, der meine Integration hinzufügt, ein Roboter-Besitzer, der ein Verhalten installiert, ein Model-Context-Protocol-Client (MCP), der mit meinem Server spricht. Ein Repo ist **unterstützend**, wenn sein Erfolg daran gemessen wird, dass meine eigene Arbeit schneller, sicherer oder konsistenter wird — eine geteilte Claude-Code-Basis, eine Terraform-Definition der GitHub-Organisation, ein Provisioning-Playbook.
 
@@ -49,11 +49,11 @@ flowchart TB
 
 Hier gibt es zwei Produktlinien, plus einen Ausreißer. Jede benennt einen Leser, den ich mir vorstellen kann.
 
-**`kamerplanter`** ist ein Plant-Lifecycle-System — die Repo-Beschreibung nennt es „agricultural technology system for plant lifecycle management", und die Topics listen FastAPI, React, Helm und Kubernetes. Dieser Stack verrät den gemeinten Leser: jemand, der einen echten Dienst will, um Pflanzen über die Zeit zu verfolgen, kein Skript. **`kamerplanter-ha`** ist dieselbe Produktlinie, die die Leute dort abholt, wo sie ohnehin schon sind. Es ist eine Home-Assistant-Integration, installierbar über HACS (den Home Assistant Community Store), also ist sein Leser enger und konkreter: ein Home-Assistant-Nutzer, der schon ein Dashboard betreibt und die Pflanzendaten darin haben will statt in einer separaten App.
+**`kamerplanter`** ist ein Plant-Lifecycle-System — die Repo-Beschreibung nennt es „agricultural technology system for plant lifecycle management“, und die Topics listen FastAPI, React, Helm und Kubernetes. Dieser Stack verrät den gemeinten Leser: jemand, der einen echten Dienst will, um Pflanzen über die Zeit zu verfolgen, kein Skript. **`kamerplanter-ha`** ist dieselbe Produktlinie, die die Leute dort abholt, wo sie ohnehin schon sind. Es ist eine Home-Assistant-Integration, installierbar über HACS (den Home Assistant Community Store), also ist sein Leser enger und konkreter: ein Home-Assistant-Nutzer, der schon ein Dashboard betreibt und die Pflanzendaten darin haben will statt in einer separaten App.
 
 Die Reachy-Mini-Linie richtet sich an Besitzer des Reachy-Mini-Roboters. **`reachy-mini-app`** ist ein Verhaltenspaket auf Basis des `reachy_mini`-SDK von Pollen Robotics / Hugging Face — der Leser ist ein Roboter-Besitzer, der will, dass der Roboter *etwas tut*. **`reachy-mini-mcp`** ist ein MCP-Server, der den Pollen-Daemon in REST (HTTP/JSON) verpackt. Sein Leser ist eine Stufe technischer: jemand, der den Roboter an einen MCP-Client oder eine Automatisierung anbindet und eine API-Oberfläche braucht statt eines fertig geschnürten Verhaltens.
 
-Der Ausreißer ist **`esphome-configs`**, beschrieben als „small reusable parts for works with esphome" und mit `iot` und `smart-home` getaggt. Sein Leser ist ein Smart-Home-Bastler, der schon ESPHome-YAML schreibt und Bausteine will statt fertiger Firmware. Es liegt am nächsten am unterstützenden Stapel — es sind Teile, kein Produkt —, aber die Teile sind *für andere Bastler* veröffentlicht, also zähle ich es als Produkt.
+Der Ausreißer ist **`esphome-configs`**, beschrieben als „small reusable parts for works with esphome“ und mit `iot` und `smart-home` getaggt. Sein Leser ist ein Smart-Home-Bastler, der schon ESPHome-YAML schreibt und Bausteine will statt fertiger Firmware. Es liegt am nächsten am unterstützenden Stapel — es sind Teile, kein Produkt —, aber die Teile sind *für andere Bastler* veröffentlicht, also zähle ich es als Produkt.
 
 Fünf Repos. Das ist die gesamte nach außen gerichtete Fläche, und zwei davon sind dasselbe Pflanzensystem mit zwei Gesichtern.
 

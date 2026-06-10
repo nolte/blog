@@ -31,7 +31,7 @@ Feature-Branches tragen eines von fünf Präfixen: `feat/`, `fix/`, `chore/`, `d
 
 Ein Pull Request ist der einzige Weg nach `develop`, und er muss vor dem Merge eine feste Reihe von Gates passieren.
 
-Der Branch muss zuerst aktuell sein. Bevor der PR aufgeht, rebase ich ihn auf die Spitze von `develop`, und wenn sich `develop` bei offenem PR weiterbewegt, rebase ich erneut. GitHub erzwingt das ebenfalls — über die Einstellung „require branches to be up to date" — sodass der CI-Lauf immer den Zustand widerspiegelt, der nach dem Merge existieren wird.
+Der Branch muss zuerst aktuell sein. Bevor der PR aufgeht, rebase ich ihn auf die Spitze von `develop`, und wenn sich `develop` bei offenem PR weiterbewegt, rebase ich erneut. GitHub erzwingt das ebenfalls — über die Einstellung „require branches to be up to date“ — sodass der CI-Lauf immer den Zustand widerspiegelt, der nach dem Merge existieren wird.
 
 Die Beschreibung ist nicht frei formuliert. Jeder PR nutzt ein Template mit fünf Abschnitten in fester Reihenfolge: Summary, Changes, Linked issues, Testing und Risk / rollout notes. Ein Lint-Workflow prüft bei jedem Push Titel und Body, und er ist ein Required Check — ein fehlerhafter Titel oder ein fehlender Abschnitt lässt den Build durchfallen.
 
@@ -94,7 +94,7 @@ Der größte Aufwand ist heute der Versions-Abgleich-Schritt. Im Idealfluss schr
 
 Es gibt auch Plattform-Kanten. Ein unter dem Standard-Token veröffentlichtes Release kaskadiert nicht immer als frischer Workflow-Lauf zum nachgelagerten Refresh — ein bekanntes GitHub-Actions-Verhalten, das dieselbe Credential-Arbeit beheben wird. Bis dahin behalte ich im Auge, ob `main` nach einem Publish tatsächlich gewandert ist.
 
-Und das Modell zahlt sich nur aus, wenn du die Linie hältst. In dem Moment, in dem jemand „nur dieses eine Mal" direkt auf `main` committet, ist die Garantie, dass `main` dem letzten Release entspricht, weg — und jeder Leser, der ihr vertraut hat, liegt jetzt falsch. Die Strenge ist das Feature.
+Und das Modell zahlt sich nur aus, wenn du die Linie hältst. In dem Moment, in dem jemand „nur dieses eine Mal“ direkt auf `main` committet, ist die Garantie, dass `main` dem letzten Release entspricht, weg — und jeder Leser, der ihr vertraut hat, liegt jetzt falsch. Die Strenge ist das Feature.
 
 ## Was ich behalte
 
