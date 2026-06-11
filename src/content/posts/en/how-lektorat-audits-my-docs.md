@@ -1,6 +1,6 @@
 ---
 title: "How Lektorat audits my docs before I ship them"
-description: "Lektorat is the editorial layer in my shared Claude Code plugin. It reads a post against five quality dimensions and runs in three modes — audit, patch, revise — so I curate AI-drafted prose by checklist, not by eyeball."
+description: "Lektorat is the editorial layer in my shared Claude Code plugin. It reads a post against six quality dimensions and runs in three modes — audit, patch, revise — so I curate AI-drafted prose by checklist, not by eyeball."
 pubDate: 2026-06-06
 updatedDate: 2026-06-06
 lang: en
@@ -18,13 +18,14 @@ If you haven't met the plugin yet, the [baseline post](/blog/claude-shared-basel
 
 ## What an editor actually has to check
 
-The hard part of editing isn't fixing a typo. It's holding several unrelated checks in your head at once and applying them evenly across a whole document. Lektorat names those checks as five dimensions, defined in the spec at `spec/project/lektorat/`:
+The hard part of editing isn't fixing a typo. It's holding several unrelated checks in your head at once and applying them evenly across a whole document. Lektorat names those checks as six dimensions, defined in the spec at `spec/project/lektorat/`:
 
 - **D1 — readability.** Are sentences and paragraphs the right length for the page's job?
 - **D2 — comprehensibility.** Is there jargon, an unexpanded acronym, or a hidden prerequisite the reader can't resolve?
 - **D3 — spelling and grammar.** The mechanical layer.
 - **D4 — style.** Active voice, consistent tense, sentence-case headings, no register that flips halfway through.
 - **D5 — audience-fit.** Does the page match the audience it claims to serve?
+- **D6 — idiomatic naturalness.** Does the text read like it was written in its own language — or do calques and foreign sentence patterns show through?
 
 Every finding is one of three severities: `critical`, `warning`, or `suggestion`. That ordering is what makes a report actionable — I fix the criticals, I read the warnings, and I treat suggestions as optional.
 
@@ -32,7 +33,7 @@ The dimensions aren't all hand-rolled heuristics. D1 leans on **LIX**, a readabi
 
 ## Three ways to run it: audit, patch, revise
 
-The same five-dimension check drives three operations, and picking the right one is most of using the tool well.
+The same six-dimension check drives three operations, and picking the right one is most of using the tool well.
 
 `audit` is read-only. It scans the target, writes a report, and touches nothing else. It's safe to run unattended — in a pre-commit hook, a release gate, or just because I want to know how bad a backlog is.
 
@@ -47,7 +48,7 @@ Lektorat is two pieces, and the boundary between them is deliberate. `lektorat-a
 ```mermaid
 flowchart LR
     Me([me]) -->|"lektoriere this post"| Skill["lektorat-apply<br/>(skill: dialogue + writes)"]
-    Skill -->|dispatch, read-only| Scanner["lektorat-scanner<br/>(agent: D1–D5 detection)"]
+    Skill -->|dispatch, read-only| Scanner["lektorat-scanner<br/>(agent: D1–D6 detection)"]
     Scanner -->|findings inventory| Skill
     Skill -->|audit / patch / revise| Trail[(".audits/lektorat/&lt;timestamp&gt;/")]
     Skill -->|diff + approval| Me
