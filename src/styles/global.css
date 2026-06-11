@@ -20,6 +20,10 @@
 --------------------------------------------------------------------------- */
 
 :root {
+  /* native UI (scrollbars, form controls) follows the OS until the user picks
+     a mode explicitly; the [data-theme] rules below pin it then. */
+  color-scheme: light dark;
+
   /* surfaces */
   --c-surface: #f4f1ea; /* warm bone white — page */
   --c-surface-subtle: #ede9de; /* inset / code / tag */
@@ -55,8 +59,14 @@
   --c-selection: #4a529d2e; /* ≈18% */
 }
 
+/* Dark-mode tokens. Two entry points carry identical values by necessity (one
+   inside the media query, one keyed on the attribute) — keep them in sync:
+   - `@media (prefers-color-scheme: dark)` + `:not([data-theme="light"])`:
+     the OS prefers dark and the user hasn't forced light;
+   - `:root[data-theme="dark"]`: the user chose dark via the header toggle,
+     overriding a light OS. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --c-surface: #20222a; /* deep warm charcoal (never #000) */
     --c-surface-subtle: #262833;
     --c-surface-elevated: #2b2e39;
@@ -84,6 +94,42 @@
 
     --c-selection: #8e92e63d; /* ≈24% */
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --c-surface: #20222a;
+  --c-surface-subtle: #262833;
+  --c-surface-elevated: #2b2e39;
+
+  --c-content: #f1eee5;
+  --c-muted: #aeaca2;
+  --c-faint: #85837a;
+
+  --c-line: #383b45;
+  --c-line-strong: #454956;
+
+  --c-brand: #8e92e6;
+  --c-brand-hover: #a2a6ee;
+  --c-brand-fg: #1b1d24;
+  --c-link: #a6aaef;
+
+  --c-moss: #6fbf8a;
+  --c-moss-text: #7fcf9a;
+
+  --c-accent: #e0a23c;
+  --c-accent-fg: #3a2d12;
+
+  --c-ring: #8e92e6;
+
+  --c-selection: #8e92e63d;
+}
+
+/* User forced light on a dark OS — :root already holds the light values, this
+   only needs to pin native UI back to light. */
+:root[data-theme="light"] {
+  color-scheme: light;
 }
 
 @theme inline {
@@ -204,4 +250,34 @@
   --tw-prose-pre-bg: var(--c-surface-subtle);
   --tw-prose-th-borders: var(--c-line-strong);
   --tw-prose-td-borders: var(--c-line);
+}
+
+/* Theme-toggle icon visibility — mirrors the dark-mode token logic so the
+   correct glyph shows before any JS runs (no icon flash). Light shows the moon
+   (click → go dark); dark shows the sun (click → go light). */
+.theme-toggle .icon-sun {
+  display: none;
+}
+.theme-toggle .icon-moon {
+  display: inline;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun {
+    display: inline;
+  }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon {
+    display: none;
+  }
+}
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+  display: inline;
+}
+:root[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+:root[data-theme="light"] .theme-toggle .icon-sun {
+  display: none;
+}
+:root[data-theme="light"] .theme-toggle .icon-moon {
+  display: inline;
 }

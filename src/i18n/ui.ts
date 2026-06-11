@@ -23,6 +23,7 @@ export const ui = {
     "404.title": "Page not found",
     "404.body": "The page you were looking for does not exist.",
     "404.home": "Go home",
+    "theme.toggle": "Toggle light / dark theme",
   },
   de: {
     "nav.home": "Start",
@@ -46,6 +47,7 @@ export const ui = {
     "404.title": "Seite nicht gefunden",
     "404.body": "Die gesuchte Seite existiert nicht.",
     "404.home": "Zur Startseite",
+    "theme.toggle": "Helles / dunkles Theme umschalten",
   },
 } as const;
 

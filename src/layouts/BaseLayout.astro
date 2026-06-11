@@ -22,6 +22,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
+    {/*
+      Theme bootstrap — runs before first paint to apply the user's saved
+      choice (set by the header toggle) and avoid a flash of the wrong theme.
+      No saved choice → the attribute stays unset and prefers-color-scheme
+      governs. `is:inline` keeps it un-bundled and synchronous in <head>.
+    */}
+    <script is:inline>
+      (() => {
+        try {
+          const t = localStorage.getItem("theme");
+          if (t === "dark" || t === "light") {
+            document.documentElement.dataset.theme = t;
+          }
+        } catch (e) {
+          /* localStorage unavailable (private mode) — fall back to OS pref */
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href={canonicalURL} />
     <title>{fullTitle}</title>
