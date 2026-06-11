@@ -1,0 +1,12 @@
+# Per-repo override for the `release-notes-curate` skill's project-type
+# autodetection (spec/project/release-skill-layer §"Skill A — Draft notes curation").
+#
+# Autodetection's first matching signal here is "Node / TypeScript app", because
+# Astro ships a `scripts.start` entry in package.json. That bundle (runtime
+# requirements, operator migration notes) is the wrong fit: this repository is a
+# bilingual content blog / knowledge base, and its releases summarise which posts
+# shipped — not API surface, dependencies, or runtime changes.
+#
+# Pin the documentation bundle so every curation run selects the content-oriented
+# sections (new posts, updated posts, translations) deterministically.
+project_type: documentation-only
