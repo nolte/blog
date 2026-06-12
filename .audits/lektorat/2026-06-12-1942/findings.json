@@ -1,0 +1,43 @@
+{
+  "operation": "audit",
+  "operation_version": "1",
+  "repository": "blog",
+  "ran_at": "2026-06-12T19:48:23Z",
+  "language_summary": [
+    {"language": "en", "files": 1},
+    {"language": "de", "files": 1}
+  ],
+  "pipeline_metadata": {
+    "en": {"tool": "vale", "version": "3.14.1", "configured_path": null, "status": "unconfigured-no-vale-ini",
+      "readability": {"library": "nolte-readability-lix", "library_version": "1.0.0"}},
+    "de": {"tool": "languagetool-http", "version": "public-api-2026", "configured_path": "https://api.languagetool.org/v2",
+      "readability": {"library": "nolte-readability-lix", "library_version": "1.0.0",
+        "tokenizer": "builtin-unicode-regex", "long_word_threshold": 6, "decompounding": false}}
+  },
+  "inventory_findings": [
+    {"kind": "vale-unavailable", "language": "en", "file": null,
+     "message": "No .vale.ini; Vale v3.14.1 unconfigured. EN D3/D4 (Vale mechanics) skipped."}
+  ],
+  "findings": [
+    {
+      "id": "c08370ff6da8", "severity": "suggestion", "dimension": "D6",
+      "file": "src/content/posts/de/ai-assisted-test-automation-e2e.md",
+      "line_start": 76, "line_end": 76, "language": "de", "audience": ["A", "C"],
+      "message": "Unidiomatic collocation: 'entgegengesetzte Instinkte wollen' mirrors EN 'want opposite instincts'.",
+      "rule": "D6:collocation (lektorat §D6 Idiomatic naturalness)",
+      "evidence": "weil Erzeugen und Reviewen entgegengesetzte Instinkte wollen",
+      "suggested_resolution": "Use 'verlangen' or 'brauchen'.",
+      "resolution": "adopted: reworded to 'entgegengesetzte Instinkte verlangen'"
+    },
+    {
+      "id": "a066f59abb65", "severity": "suggestion", "dimension": "D4",
+      "file": "src/content/posts/de/ai-assisted-test-automation-e2e.md",
+      "line_start": 96, "line_end": 96, "language": "de", "audience": ["A", "C"],
+      "message": "Three consecutive clauses open with 'Auf der ...-Stufe' / 'Auf Integration' (GERMAN_WORD_REPEAT_BEGINNING_RULE); deliberate finale anaphora.",
+      "rule": "D4:internal-inconsistency (lektorat §D4 Writing style)",
+      "evidence": "Auf der Unit-Stufe ... Auf Integration wird ... Auf der Contract-Stufe ist die Disziplin Verdrahtung",
+      "suggested_resolution": "Vary one opener if rhythm feels monotonous.",
+      "resolution": "adopted: varied the second opener to 'Bei Integration' (mirrors the EN 'On integration' variation; keeps the parallel structure)"
+    }
+  ]
+}

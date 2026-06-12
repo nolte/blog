@@ -1,0 +1,64 @@
+{
+  "operation": "audit",
+  "operation_version": "1",
+  "repository": "blog",
+  "ran_at": "2026-06-12T19:13:00Z",
+  "language_summary": [
+    {"language": "en", "files": 1},
+    {"language": "de", "files": 1}
+  ],
+  "pipeline_metadata": {
+    "en": {"tool": "vale", "version": "3.14.1", "configured_path": null, "status": "unconfigured-no-vale-ini",
+      "readability": {"library": "nolte-readability-lix", "library_version": "1.0.0"}},
+    "de": {"tool": "languagetool-http", "version": "6.9-SNAPSHOT (build 2026-06-12 17:37:53 +0000)",
+      "configured_path": "https://api.languagetool.org/v2",
+      "readability": {"library": "nolte-readability-lix", "library_version": "1.0.0",
+        "tokenizer": "builtin-unicode-regex", "long_word_threshold": 6, "decompounding": false}}
+  },
+  "inventory_findings": [
+    {"kind": "vale-unavailable", "language": "en", "file": null,
+     "message": "No .vale.ini; Vale v3.14.1 installed but unconfigured. EN D3/D4 (Vale mechanics) skipped."}
+  ],
+  "findings": [
+    {
+      "id": "8a9b370a7eda", "severity": "warning", "dimension": "D2",
+      "file": "src/content/posts/en/ai-assisted-test-automation-integration.md",
+      "line_start": 73, "line_end": 73, "language": "en", "audience": ["A", "C"],
+      "message": "Abbreviation 'E2E' used without expansion on first use on this page.",
+      "rule": "D2:unexplained-abbreviation (lektorat §D2 Comprehensibility)",
+      "evidence": "into the E2E tier, where a real browser drives a real backend",
+      "suggested_resolution": "Expand on first use: 'end-to-end (E2E) tier'.",
+      "resolution": "fixed: expanded to 'end-to-end (E2E) tier' on first use"
+    },
+    {
+      "id": "6f6676308db6", "severity": "warning", "dimension": "D2",
+      "file": "src/content/posts/de/ai-assisted-test-automation-integration.md",
+      "line_start": 73, "line_end": 73, "language": "de", "audience": ["A", "C"],
+      "message": "Abkuerzung 'E2E' bei Erstverwendung nicht erklaert.",
+      "rule": "D2:unexplained-abbreviation (lektorat §D2 Comprehensibility)",
+      "evidence": "in die E2E-Stufe, wo ein echter Browser ein echtes Backend durch echte Nutzerpfade treibt",
+      "suggested_resolution": "Bei Erstverwendung ausschreiben: 'End-to-End-Stufe (E2E)'.",
+      "resolution": "fixed: expanded to 'End-to-End-Stufe (E2E)' on first use"
+    },
+    {
+      "id": "25003de2a5d0", "severity": "suggestion", "dimension": "D4",
+      "file": "src/content/posts/de/ai-assisted-test-automation-integration.md",
+      "line_start": 57, "line_end": 57, "language": "de", "audience": ["A", "C"],
+      "message": "Four consecutive sentences begin with 'Sie'/'Sieh' (GERMAN_WORD_REPEAT_BEGINNING_RULE).",
+      "rule": "D4:internal-inconsistency (lektorat §D4 Writing style)",
+      "evidence": "Sieh dir jetzt die tatsaechliche Datei wieder an. Sie nutzt kein testcontainers. Sie verbindet sich ... Sie testet eine Sache ...",
+      "suggested_resolution": "Vary one or two openers.",
+      "resolution": "adopted: reworded to 'Stattdessen verbindet sie sich ...' and 'Getestet wird genau eine Sache: ...'"
+    },
+    {
+      "id": "056302e585a3", "severity": "suggestion", "dimension": "D6",
+      "file": "src/content/posts/de/ai-assisted-test-automation-integration.md",
+      "line_start": 73, "line_end": 73, "language": "de", "audience": ["A", "C"],
+      "message": "Coinage 'skippbare' (from English 'to skip') is not lexicalised in German.",
+      "rule": "D6:coinage (lektorat §D6 Idiomatic naturalness)",
+      "evidence": "gegen eine skippbare Datei in der Mitte",
+      "suggested_resolution": "Use 'ueberspringbare Datei'.",
+      "resolution": "adopted: reworded to 'ueberspringbare Datei'"
+    }
+  ]
+}

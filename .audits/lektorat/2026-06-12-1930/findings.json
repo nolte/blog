@@ -1,0 +1,63 @@
+{
+  "operation": "audit",
+  "operation_version": "1",
+  "repository": "blog",
+  "ran_at": "2026-06-12T19:32:03Z",
+  "language_summary": [
+    {"language": "en", "files": 1},
+    {"language": "de", "files": 1}
+  ],
+  "pipeline_metadata": {
+    "en": {"tool": "vale", "version": "3.14.1", "configured_path": null, "status": "unconfigured-no-vale-ini",
+      "readability": {"library": "nolte-readability-lix", "library_version": "1.0.0"}},
+    "de": {"tool": "languagetool-http", "version": "6.9-SNAPSHOT", "configured_path": "https://api.languagetool.org/v2",
+      "readability": {"library": "nolte-readability-lix", "library_version": "1.0.0",
+        "tokenizer": "builtin-unicode-regex", "long_word_threshold": 6, "decompounding": false}}
+  },
+  "inventory_findings": [
+    {"kind": "vale-unavailable", "language": "en", "file": null,
+     "message": "No .vale.ini; Vale v3.14.1 unconfigured. EN D3/D4 (Vale mechanics) skipped."}
+  ],
+  "findings": [
+    {
+      "id": "fb2ad13698d2", "severity": "warning", "dimension": "D3",
+      "file": "src/content/posts/de/ai-assisted-test-automation-contract-api.md",
+      "line_start": 89, "line_end": 89, "language": "de", "audience": ["A", "C"],
+      "message": "Substantiviertes Ordinalzahlwort 'dritten' muss grossgeschrieben werden ('Dritten').",
+      "rule": "SUBSTANTIVIERTES_ADJEKTIV (lektorat §D3 Spelling and grammar)",
+      "evidence": "Claude ist gut im ersten und im dritten. Die Entscheidung in der Mitte",
+      "suggested_resolution": "Capitalise the substantivised ordinals: 'im Ersten und im Dritten'.",
+      "resolution": "fixed: 'im Ersten und im Dritten'"
+    },
+    {
+      "id": "e0c08aef53c1", "severity": "suggestion", "dimension": "D4",
+      "file": "src/content/posts/de/ai-assisted-test-automation-contract-api.md",
+      "line_start": 63, "line_end": 63, "language": "de", "audience": ["A", "C"],
+      "message": "Three consecutive sentences begin with 'Sie sind' (GERMAN_WORD_REPEAT_BEGINNING_RULE).",
+      "rule": "D4:internal-inconsistency (lektorat §D4 Writing style)",
+      "evidence": "Sie sind schnell — ... Sie sind isoliert — ... Sie sind deterministisch — ...",
+      "suggested_resolution": "If intentional anaphora, leave as-is.",
+      "resolution": "dismissed: deliberate triadic anaphora mirroring the EN body ('They are fast — ... They are isolated — ... They are deterministic — ...'); bilingual symmetry kept"
+    },
+    {
+      "id": "0d8f7efdf57f", "severity": "suggestion", "dimension": "D6",
+      "file": "src/content/posts/de/ai-assisted-test-automation-contract-api.md",
+      "line_start": 85, "line_end": 85, "language": "de", "audience": ["A", "C"],
+      "message": "'Geruestbau auf Anfrage' reads as a word-for-word rendering of 'scaffolding-on-request'.",
+      "rule": "D6:calque (lektorat §D6 Idiomatic naturalness)",
+      "evidence": "war die nuetzliche Claude-Rolle der Geruestbau auf Anfrage",
+      "suggested_resolution": "Use a verbal construction or the EN loanword.",
+      "resolution": "adopted: reworded to the verbal 'auf Anfrage Test-Gerueste zu bauen' (keeps the Geruest metaphor consistent with article 3's 'Geruestbauer-Rolle')"
+    },
+    {
+      "id": "a9c827739e52", "severity": "suggestion", "dimension": "D6",
+      "file": "src/content/posts/de/ai-assisted-test-automation-contract-api.md",
+      "line_start": 99, "line_end": 99, "language": "de", "audience": ["A", "C"],
+      "message": "'Reparierer' is an understandable but uncommon agentive noun.",
+      "rule": "D6:coinage (lektorat §D6 Idiomatic naturalness)",
+      "evidence": "Der autonome Reparierer ist hier oben endgueltig weg.",
+      "suggested_resolution": "Use 'Reparatur-Agent' or the loanword 'Fixer'.",
+      "resolution": "adopted: reworded to 'Reparatur-Agent' (consistent with the series' Agent framing)"
+    }
+  ]
+}
