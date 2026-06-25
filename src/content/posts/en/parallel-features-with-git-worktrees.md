@@ -12,7 +12,9 @@ primaryAudience: A
 secondaryAudiences: [C]
 ---
 
-Here is a situation I hit almost every week. A long build is running on `feat/mermaid-diagrams`. While it churns, I want to draft an unrelated spec on `feat/parallel-working-copies`. One repository, one checkout, two features that have nothing to do with each other. So I do the obvious thing: `git switch feat/parallel-working-copies` and start typing.
+Here is a situation I hit almost every week. A long build is running on `feat/mermaid-diagrams`. While it churns, I want to draft an unrelated spec on `feat/parallel-working-copies`.
+
+One repository, one checkout, two features that have nothing to do with each other. So I do the obvious thing: `git switch feat/parallel-working-copies` and start typing.
 
 That obvious thing is the mistake. This post is about why, and about the git feature that makes the mistake unnecessary.
 
@@ -25,7 +27,7 @@ A single checkout holds exactly one branch at a time. The moment I switch branch
 - **Uncommitted edits collide.** Anything I hadn't committed on the paused branch either blocks the switch or gets stashed into a pile I have to remember to reapply onto the *right* branch later. Reapply it onto the wrong one and you've smeared feature B's half-finished change across feature A's commit.
 - **Build outputs invalidate.** The artifacts on disk now belong to a different branch. The next build is a cold build, and any incremental tooling throws its cache away.
 - **IDE indexes thrash.** Language servers re-index, watchers re-scan, and everything that cached the current state has to rebuild it.
-- **Tooling that pinned the working directory re-bootstraps.** This is the one that bites me hardest with AI assistants: a Claude Code session that had built up context about the files in front of it is now pointed at a different tree, and it has to start over.
+- **Tooling that pinned the working directory re-bootstraps.** This is the one that bites me hardest with AI (artificial intelligence) assistants: a Claude Code session that had built up context about the files in front of it is now pointed at a different tree, and it has to start over.
 
 None of this shows up as an error. It shows up as friction, as a stash you forgot, as twenty minutes of "why is this rebuilding," as a commit that quietly carries a line it shouldn't. The cost of parallel features in one checkout isn't the conflict at the end — it's the slow corruption of state along the way.
 
@@ -46,7 +48,7 @@ That is not a clone. There is one object store, so no duplicated history and no 
 A worktree used carelessly grows its own failure modes, so across my repositories the rules live in a spec — [`spec/project/parallel-working-copies/`](https://github.com/nolte/claude-shared/blob/develop/spec/project/parallel-working-copies/en.md) in the [`claude-shared`](https://github.com/nolte/claude-shared) plugin. A few of the load-bearing ones:
 
 - **The primary checkout stays on `develop`, always.** It is not where features get built — it is the launchpad every feature worktree branches off, and the stable place to do integration work like rebases and release inspection. Even with only one feature in flight, that feature gets its own worktree. A single in-place switch destroys the launchpad role.
-- **Worktrees live outside the primary checkout.** They go under a configurable root (`${NOLTE_WORKTREE_ROOT:-~/repos/.worktrees}/<repo>/<slug>/`), never nested inside the repo — and explicitly never inside `.claude/`, which plugin tooling may rewrite wholesale. Hiding a nested worktree behind a `.gitignore` entry is forbidden too: drift you can't see in `git status` is drift that accumulates.
+- **Worktrees live outside the primary checkout.** They go under a configurable root (`${NOLTE_WORKTREE_ROOT:-~/repos/.worktrees}/<repo>/<slug>/` — an optional shell variable that falls back to `~/repos/.worktrees` when it's unset), never nested inside the repo — and explicitly never inside `.claude/`, which plugin tooling may rewrite wholesale. Hiding a nested worktree behind a `.gitignore` entry is forbidden too: drift you can't see in `git status` is drift that accumulates.
 - **One branch per worktree, and you only move a branch from inside the worktree that owns it.** Re-pointing a branch with `git branch -f` from somewhere else slides the ref out from under its working tree — which then shows the new files as uncommitted "changes" it never made. The fix is to do the merge or rebase from inside the worktree: `git -C <worktree> merge origin/develop`.
 - **A plan goes on disk before the work does.** Each worktree gets a `.resume/<slug>/plan.md` — goal, current state, the load-bearing decision, the ordered steps — written before substantive work begins. It's gitignored, so it never competes with the real diff for review attention, but it means a crashed or interrupted session can be reopened from a known point rather than reconstructed from a half-finished change.
 
