@@ -28,3 +28,8 @@ pnpm-debug.log*
 
 # Claude Code per-user settings (user-specific, not repo-wide policy)
 .claude/settings.local.json
+
+# Lektorat audit run-snapshots: transient, point-in-time tool output. Provenance
+# for applied fixes lives in the commit message, not in tracked snapshots.
+# (Persistent review-plan artefacts elsewhere under .audits/ may still be tracked.)
+.audits/lektorat/
