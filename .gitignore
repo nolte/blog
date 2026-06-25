@@ -28,6 +28,3 @@ pnpm-debug.log*
 
 # Claude Code per-user settings (user-specific, not repo-wide policy)
 .claude/settings.local.json
-
-# Claude Code local worktrees (per-user working state, not repo content)
-.claude/worktrees/
