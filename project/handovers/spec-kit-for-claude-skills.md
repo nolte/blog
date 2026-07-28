@@ -21,7 +21,7 @@ Post pair: `src/content/posts/{en,de}/spec-kit-for-claude-skills.md` · `transla
 | a-13 third-party characterisation cited | passed (GitHub / Spec Kit claims cite README, monorepo guide, and the locally scaffolded tree) | passed |
 | a-15 contractions in running prose (EN only) | passed (31 verb contractions after repair; draft initially had 0 — finding raised and fixed) | n/a |
 | a-16 names what made the decision hard before the choice | passed (§"Where I'm starting from" states the missing-layer problem before the tool appears; A1–A4 stated as open) | passed |
-| a-17 / a-17a disclosure badge, informal register | passed (badge renders on `aiGenerated: true`; no impersonal `one`) | passed (one impersonal `man` rewritten to `du`; the single `Sie` is the pronoun for „die Kette", not the formal address) |
+| a-17 / a-17a disclosure badge, informal register | passed (badge renders on `aiGenerated: true`; no impersonal `one`) | passed (one impersonal `man` rewritten to `du`; the single `Sie` is the pronoun for „die Kette“, not the formal address) |
 | a-17b no calque, no loanword-gender error | n/a | passed on self-pass — **detection gate is D6 in the `lektorat-apply` audit** |
 
 ## Per-pair criteria
@@ -56,4 +56,4 @@ Unused sources: none.
 
 - **Handover route**: target-state — `nolte-shared:lektorat-apply`, operation `audit`, over the EN+DE pair. **Not yet dispatched**: the operator did not request a subagent run, so the pair carries the self-check above but no independent editorial audit. The D6 calque dimension in particular is self-passed only. Note for when it runs: this repository ships no `.vale.ini`, so the audit's EN D3/D4 dimensions report `vale-unavailable`; D1/D2/D5/D6 and the DE dimensions run normally.
 - **Build status**: green. `ASDF_NODEJS_VERSION=22.22.3 npm run build` (the repo pins no `.tool-versions`, so the Node version was set for the run). Final run was a clean build after `rm -rf .astro dist` — 45 pages, including `/blog/spec-kit-for-claude-skills/` and `/de/blog/spec-kit-for-claude-skills/`, no content-collection warnings.
-- **Repository state**: `nolte/blog`, branch `develop`, working tree at `df13717` plus the uncommitted post pair and this artefact. No commit and no PR created — that boundary belongs to the operator.
+- **Repository state**: `nolte/blog`, branch `post/spec-kit-for-claude-skills`, branched off `develop` at `df13717`. The self-check above ran against the working tree that became commit `a8ed25b`; the post pair and this artefact are carried by pull request #29 against `develop`. Review findings on that PR are fixed forward in follow-up commits, never by amending `a8ed25b`.
